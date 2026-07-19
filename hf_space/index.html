@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Bowling Green Thinks It Works — Community Causal Map</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1: #fcfcfb; --page: #f9f9f7;
+    --ink-1: #0b0b0b; --ink-2: #52514e; --ink-3: #898781;
+    --grid: #e1e0d9; --baseline: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --pos: #2a78d6; --neg: #e34948;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1: #1a1a19; --page: #0d0d0d;
+      --ink-1: #ffffff; --ink-2: #c3c2b7; --ink-3: #898781;
+      --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,0.10);
+      --pos: #3987e5; --neg: #e66767;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --page: #0d0d0d;
+    --ink-1: #ffffff; --ink-2: #c3c2b7; --ink-3: #898781;
+    --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #3987e5; --neg: #e66767;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .viz-root { background: var(--page); color: var(--ink-1); min-height: 100vh; padding: 20px; }
+  header h1 { font-size: 20px; font-weight: 650; }
+  header p { color: var(--ink-2); font-size: 13px; margin-top: 4px; max-width: 72ch; }
+  .legend { display: flex; flex-wrap: wrap; gap: 18px; align-items: center;
+            font-size: 12px; color: var(--ink-2); margin: 12px 0 10px; }
+  .legend .key { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch { width: 22px; height: 0; border-top: 2.5px solid; display: inline-block; }
+  main { display: flex; gap: 14px; align-items: stretch; }
+  #vizwrap { flex: 1 1 66%; background: var(--surface-1); border: 1px solid var(--border);
+             border-radius: 10px; overflow: hidden; position: relative; min-width: 0; }
+  svg { display: block; width: 100%; height: 640px; cursor: grab; }
+  aside { flex: 0 0 340px; background: var(--surface-1); border: 1px solid var(--border);
+          border-radius: 10px; padding: 14px; max-height: 640px; overflow-y: auto; }
+  aside h2 { font-size: 13px; font-weight: 650; color: var(--ink-1); }
+  aside .hint { color: var(--ink-3); font-size: 12.5px; margin-top: 8px; }
+  .qspan { font-weight: 600; font-size: 13px; }
+  .qfull { color: var(--ink-2); font-size: 12.5px; margin-top: 3px; }
+  .qpid  { color: var(--ink-3); font-size: 11px; margin-top: 2px; }
+  .quote { padding: 9px 0; border-bottom: 1px solid var(--grid); }
+  .conflictnote { color: var(--ink-2); font-size: 12px; margin-top: 8px;
+                  padding: 8px; border: 1px solid var(--grid); border-radius: 6px; }
+  .loops { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .loopchip { border: 1px solid var(--border); background: var(--surface-1); color: var(--ink-2);
+              border-radius: 999px; padding: 5px 12px; font-size: 12px; cursor: pointer; }
+  .loopchip b { color: var(--ink-1); }
+  .loopchip.active { border-color: var(--ink-2); }
+  .loops-empty { color: var(--ink-3); font-size: 12.5px; margin-top: 14px; }
+  details { margin-top: 16px; }
+  summary { cursor: pointer; font-size: 13px; color: var(--ink-2); }
+  table { border-collapse: collapse; margin-top: 10px; font-size: 12.5px; width: 100%;
+          background: var(--surface-1); }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--grid); }
+  th { color: var(--ink-3); font-weight: 600; font-variant-numeric: tabular-nums; }
+  td.num { font-variant-numeric: tabular-nums; }
+  #tooltip { position: absolute; pointer-events: none; background: var(--surface-1);
+             border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px;
+             font-size: 12px; color: var(--ink-1); max-width: 300px; display: none;
+             box-shadow: 0 2px 10px rgba(0,0,0,0.12); }
+  .edgeline { fill: none; }
+  .edgehit { fill: none; stroke: transparent; stroke-width: 14px; cursor: pointer; }
+  .dim { opacity: 0.12; }
+  text.nlabel { fill: var(--ink-2); font-size: 10.5px; pointer-events: none; }
+  text.polglyph { fill: var(--ink-2); font-size: 11px; font-weight: 700; pointer-events: none; }
+  circle.node { fill: var(--surface-1); stroke: var(--baseline); stroke-width: 1.6; cursor: pointer; }
+  circle.node:hover { stroke: var(--ink-2); }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <header><p style="font-size:12px;margin-bottom:6px"><a href="https://nitchakorn.github.io/community-causal-map/report/" style="color:var(--pos);text-decoration:none">&larr; Full interactive report</a> &nbsp;&middot;&nbsp; <a href="https://github.com/nitchakorn/community-causal-map" style="color:var(--pos);text-decoration:none">code &amp; method</a></p>
+    <h1>How Bowling Green Thinks It Works — Community Causal Map</h1>
+    <p>Explicit causal claims extracted from residents' own words in the 2018 Bowling Green / Warren
+       County civic conversation (607 comments, The American Assembly / Polis). Every link is backed by
+       verbatim quotes — click any arrow to read them. Suggestions without an asserted mechanism are
+       not drawn.</p>
+  </header>
+  <div class="legend" role="list">
+    <span class="key"><span class="swatch" style="border-color: var(--pos)"></span>increases / promotes (+)</span>
+    <span class="key"><span class="swatch" style="border-color: var(--neg)"></span>reduces / prevents (−)</span>
+    <span class="key">line width = independent participants asserting it</span>
+    <span class="key">circle size = times mentioned in claims</span>
+  </div>
+  <main>
+    <div id="vizwrap"><svg id="viz" role="img" aria-label="Causal map of Bowling Green community claims"></svg><div id="tooltip"></div></div>
+    <aside id="panel"><h2>Quotes behind a link</h2>
+      <p class="hint">Click any arrow to see the verbatim resident quotes asserting that causal link.
+      Drag circles to untangle. Click a loop chip below to trace a feedback loop.</p></aside>
+  </main>
+  <div id="loopsrow" class="loops"></div>
+  <details><summary>Table view — every causal link</summary><table id="edgetable">
+    <thead><tr><th>Cause</th><th>±</th><th>Effect</th><th>Participants</th></tr></thead>
+    <tbody></tbody></table></details>
+</div>
+<script>
+const GRAPH = {"nodes": [{"id": "Drug Offense Sentencing", "n_claims": 2}, {"id": "Drug Abuse Impact", "n_claims": 1}, {"id": "Access Road Infrastructure", "n_claims": 1}, {"id": "Traffic Congestion", "n_claims": 8}, {"id": "School Socioeconomic Integration", "n_claims": 1}, {"id": "Unspecified Variable", "n_claims": 13}, {"id": "Prescription Drug Regulation", "n_claims": 1}, {"id": "Opioid Crisis", "n_claims": 5}, {"id": "Drug Dependency Causes", "n_claims": 2}, {"id": "Marijuana Legalization", "n_claims": 4}, {"id": "Tax Revenue", "n_claims": 3}, {"id": "Community Well-Being", "n_claims": 4}, {"id": "Commercial Property Redevelopment", "n_claims": 3}, {"id": "Business Signage Regulations", "n_claims": 1}, {"id": "Driver Distraction", "n_claims": 1}, {"id": "Youth Programs", "n_claims": 2}, {"id": "Highway Infrastructure", "n_claims": 2}, {"id": "Urban Development", "n_claims": 4}, {"id": "Urban Sprawl", "n_claims": 2}, {"id": "Public Transportation System", "n_claims": 2}, {"id": "Public Transportation Access", "n_claims": 2}, {"id": "Pedestrian Infrastructure", "n_claims": 3}, {"id": "Rental Property Development", "n_claims": 1}, {"id": "Local Government Jurisdiction", "n_claims": 4}, {"id": "Tax Base", "n_claims": 1}, {"id": "Public School System", "n_claims": 2}, {"id": "Traffic Enforcement", "n_claims": 4}, {"id": "City Revenue", "n_claims": 6}, {"id": "Poverty Reduction", "n_claims": 1}, {"id": "Quality of Life", "n_claims": 2}, {"id": "Traffic Accidents", "n_claims": 3}, {"id": "Local Government Corruption", "n_claims": 1}, {"id": "Prison System Strain", "n_claims": 1}, {"id": "Law Enforcement", "n_claims": 4}, {"id": "Public Safety", "n_claims": 2}, {"id": "Traffic Flow", "n_claims": 3}, {"id": "Voter Participation", "n_claims": 1}, {"id": "Parking Enforcement", "n_claims": 1}, {"id": "Community Health", "n_claims": 1}, {"id": "Road Flooding", "n_claims": 2}, {"id": "Mixed Use Development", "n_claims": 1}, {"id": "Rental Property Taxation", "n_claims": 1}, {"id": "Judicial Bias", "n_claims": 1}, {"id": "Left Turn Restrictions", "n_claims": 1}, {"id": "Immigrant and Refugee Population", "n_claims": 3}, {"id": "University Community Relations", "n_claims": 1}, {"id": "Bicycle Infrastructure", "n_claims": 1}, {"id": "HOA Regulations", "n_claims": 1}, {"id": "Animal Control Regulations", "n_claims": 1}, {"id": "Business Attraction", "n_claims": 3}, {"id": "Local Consumer Spending", "n_claims": 1}, {"id": "Park Amenities", "n_claims": 1}, {"id": "Community Engagement", "n_claims": 3}, {"id": "Green Space Development", "n_claims": 2}, {"id": "Environmental Sustainability", "n_claims": 1}, {"id": "Business Development Grants", "n_claims": 1}, {"id": "Graduate Retention", "n_claims": 1}, {"id": "Arts and Culture", "n_claims": 1}, {"id": "Rent Control Legislation", "n_claims": 1}, {"id": "Road Closures", "n_claims": 1}, {"id": "Community Character", "n_claims": 1}, {"id": "Tourism Promotion", "n_claims": 1}, {"id": "Traffic Signal Timing", "n_claims": 1}, {"id": "Riverfront Development", "n_claims": 1}, {"id": "Housing Affordability", "n_claims": 1}, {"id": "Employee Benefits", "n_claims": 1}, {"id": "Temporary Employment Practices", "n_claims": 1}, {"id": "Labor Regulations", "n_claims": 1}, {"id": "Academic Employment Conditions", "n_claims": 1}, {"id": "Zoning and Planning", "n_claims": 1}, {"id": "Private School Funding", "n_claims": 1}, {"id": "Employment Services", "n_claims": 1}, {"id": "Drug Addiction Treatment", "n_claims": 1}, {"id": "Police Community Relations", "n_claims": 1}, {"id": "Higher Education Funding", "n_claims": 2}, {"id": "Higher Education Tuition", "n_claims": 1}, {"id": "Public Pension Crisis", "n_claims": 1}], "edges": [{"source": "Drug Offense Sentencing", "target": "Drug Abuse Impact", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "create", "comment": "Judge/prosecutors should not let influential family of victim push extraordinarily harsh sentences & create more victims, ruined young lives", "raw_cause": "extraordinarily harsh sentences", "raw_effect": "more victims, ruined young lives"}]}, {"source": "Drug Offense Sentencing", "target": "Opioid Crisis", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "Harsher sentences for drug users would help combat the opioid epidemic", "comment": "Harsher sentences for drug users would help combat the opioid epidemic.", "raw_cause": "Harsher sentences for drug users", "raw_effect": "opioid epidemic"}]}, {"source": "Access Road Infrastructure", "target": "Traffic Congestion", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "1491", "span": "causes", "comment": "Access Rd, east side of Scottsville Rd. in shopping dist causes congestion. Give right of way to access road or cross streets, not a mix!", "raw_cause": "Access Rd, east side of Scottsville Rd. in shopping dist", "raw_effect": "congestion"}]}, {"source": "School Socioeconomic Integration", "target": "Unspecified Variable", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "36", "span": "reduces", "comment": "The city and county work together to keep the low socieconomic status children out of certain schools. This reduces learning opportunities.", "raw_cause": "The city and county work together to keep the low socieconomic status children out of certain schools", "raw_effect": "learning opportunities"}]}, {"source": "Unspecified Variable", "target": "City Revenue", "polarity": "-", "support": 1, "conflict": true, "quotes": [{"participant_id": "453", "span": "If we cut a major program, WKU would lose in the revenue", "comment": "If we cut a major program, WKU would lose in the revenue the program brings in, ultimately costing more money.", "raw_cause": "cut a major program", "raw_effect": "revenue"}]}, {"source": "Unspecified Variable", "target": "Community Character", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "240", "span": "add", "comment": "We need more businesses like White Squirrel and Nats in BG. They add character to our town. Done with the Olive Garden and Belks.", "raw_cause": "They", "raw_effect": "character to our town"}]}, {"source": "Unspecified Variable", "target": "Traffic Congestion", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "240", "span": "provide", "comment": "The access roads off Scottsville Rd are terrible. They provide constant traffic jams and can be dangerous. We need to budget to fix them.", "raw_cause": "They", "raw_effect": "constant traffic jams"}]}, {"source": "Unspecified Variable", "target": "Road Flooding", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "240", "span": "makes", "comment": "Our sidewalks need more connectivity. It's too piecemealed and makes some areas unusable.", "raw_cause": "It", "raw_effect": "some areas unusable"}]}, {"source": "Unspecified Variable", "target": "Housing Affordability", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "36", "span": "miss rent (say due to a car breakdown)", "comment": "A person should not miss rent (say due to a car breakdown) and face eviction in less than 2 weeks (before next payday). Make it 30 days.", "raw_cause": "a car breakdown", "raw_effect": "missing rent"}]}, {"source": "Unspecified Variable", "target": "Employment Services", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "courses aid in job placement", "comment": "WKU and local community colleges should continue to offer courses that interest those seeking an education, whether or not the courses aid in job placement.", "raw_cause": "courses", "raw_effect": "job placement"}]}, {"source": "Prescription Drug Regulation", "target": "Opioid Crisis", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "1298", "span": "fuel", "comment": "Doctors who prescribe pain and tranquilizing meds too easily fuel the drug dependency crisis.", "raw_cause": "Doctors who prescribe pain and tranquilizing meds too easily", "raw_effect": "the drug dependency crisis"}]}, {"source": "Drug Dependency Causes", "target": "Opioid Crisis", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "1298", "span": "drives", "comment": "American comfort and avoidance of any pain or suffering drives the drug dependency problem.", "raw_cause": "American comfort and avoidance of any pain or suffering", "raw_effect": "the drug dependency problem"}, {"participant_id": "1298", "span": "drives", "comment": "Individual unhappiness combined with easy legal and illegal availability of drugs drives the opioid crisis.", "raw_cause": "Individual unhappiness combined with easy legal and illegal availability of drugs", "raw_effect": "the opioid crisis"}]}, {"source": "Marijuana Legalization", "target": "Tax Revenue", "polarity": "+", "support": 2, "conflict": false, "quotes": [{"participant_id": "1053", "span": "Legalizing marijuana at the state level could produce substantial tax revenue", "comment": "Legalizing marijuana at the state level could produce substantial tax revenue, but if only BG did, it would cause problems.", "raw_cause": "Legalizing marijuana at the state level", "raw_effect": "substantial tax revenue"}, {"participant_id": "1470", "span": "Legalized Marijuana will not only assist Bowling Green in earning Tax revenue", "comment": "Legalized Marijuana will not only assist Bowling Green in earning Tax revenue but will decrease the strain on our prison system. Win-Win.", "raw_cause": "Legalized Marijuana", "raw_effect": "earning Tax revenue"}]}, {"source": "Marijuana Legalization", "target": "Prison System Strain", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "1470", "span": "will decrease the strain on our prison system", "comment": "Legalized Marijuana will not only assist Bowling Green in earning Tax revenue but will decrease the strain on our prison system. Win-Win.", "raw_cause": "Legalized Marijuana", "raw_effect": "the strain on our prison system"}]}, {"source": "Marijuana Legalization", "target": "Tourism Promotion", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "199", "span": "offers", "comment": "Recreational Cannabis in KY offers tourism, increased revenue, job opportunities, and shows massive leadership in the southern region.", "raw_cause": "Recreational Cannabis in KY", "raw_effect": "tourism, increased revenue, job opportunities"}]}, {"source": "Tax Revenue", "target": "Community Health", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "566", "span": "A healthy community requires taxes", "comment": "People want it all, without paying for anything. A healthy community requires taxes people.", "raw_cause": "taxes", "raw_effect": "healthy community"}]}, {"source": "Community Well-Being", "target": "Unspecified Variable", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "1053", "span": "if only BG did, it would cause problems", "comment": "Legalizing marijuana at the state level could produce substantial tax revenue, but if only BG did, it would cause problems.", "raw_cause": "if only BG did", "raw_effect": "problems"}]}, {"source": "Commercial Property Redevelopment", "target": "Traffic Congestion", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "1050", "span": "Connect business parking lots to reduce unnecessary traffic on main roadways", "comment": "Connect business parking lots to reduce unnecessary traffic on main roadways", "raw_cause": "Connect business parking lots", "raw_effect": "unnecessary traffic on main roadways"}]}, {"source": "Commercial Property Redevelopment", "target": "Traffic Flow", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "365", "span": "Shopping should be spread across all four corners of the county, so the traffic on Scottsville rd and Campbell lane will be improved", "comment": "Shopping should be spread across all four corners of the county, so the traffic on Scottsville rd and Campbell lane will be improved.", "raw_cause": "spreading shopping across all four corners of the county", "raw_effect": "the traffic on Scottsville rd and Campbell lane will be improved"}]}, {"source": "Commercial Property Redevelopment", "target": "Business Attraction", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "87", "span": "Greenwood Mall should be remodeled to attract more buyers", "comment": "Greenwood Mall should be remodeled to attract more buyers.", "raw_cause": "remodeling Greenwood Mall", "raw_effect": "attracting more buyers"}]}, {"source": "Business Signage Regulations", "target": "Driver Distraction", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "1053", "span": "They distract drivers.", "comment": "Animated digital business signs are a road hazard. They distract drivers.", "raw_cause": "Animated digital business signs", "raw_effect": "distract drivers"}]}, {"source": "Youth Programs", "target": "Unspecified Variable", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "1050", "span": "time restrictions due to special swim leagues", "comment": "Indoor swimming pools for public use and therapy year around without time restrictions due to special swim leagues. Encourage healthier life", "raw_cause": "special swim leagues", "raw_effect": "time restrictions"}]}, {"source": "Youth Programs", "target": "Community Engagement", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "6", "span": "More youth programs are needed to bring the community together", "comment": "More youth programs are needed to bring the community together: volunteer organizations, community service, innovative creations labs", "raw_cause": "More youth programs", "raw_effect": "bring the community together"}]}, {"source": "Highway Infrastructure", "target": "Urban Development", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "1053", "span": "Highway exits spur development", "comment": "Highway exits spur development, which would likely lead to undesireable suburban sprawl.", "raw_cause": "Highway exits", "raw_effect": "development"}]}, {"source": "Highway Infrastructure", "target": "Traffic Congestion", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "771", "span": "it could help decrease BG congestion", "comment": "Should be an interstate exit for the Woodburn area it could help decrease BG congestion and let people bypass BG all together", "raw_cause": "interstate exit for the Woodburn area", "raw_effect": "BG congestion"}]}, {"source": "Urban Development", "target": "Urban Sprawl", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "1053", "span": "development, which would likely lead to undesireable suburban sprawl", "comment": "Highway exits spur development, which would likely lead to undesireable suburban sprawl.", "raw_cause": "development", "raw_effect": "undesireable suburban sprawl"}]}, {"source": "Urban Development", "target": "Traffic Congestion", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "410", "span": "they are increasing traffic", "comment": "New developments should help pay to widen the roads in the areas where they are increasing traffic.", "raw_cause": "New developments", "raw_effect": "traffic"}]}, {"source": "Urban Sprawl", "target": "Pedestrian Infrastructure", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "1043", "span": "Urban sprawl in Bowling Green is a major problem that has made this city less walking/bike friendly.", "comment": "Urban sprawl in Bowling Green is a major problem that has made this city less walking/bike friendly.", "raw_cause": "Urban sprawl in Bowling Green", "raw_effect": "walking/bike friendliness of the city"}]}, {"source": "Public Transportation System", "target": "Public Transportation Access", "polarity": "+", "support": 2, "conflict": false, "quotes": [{"participant_id": "1044", "span": "Better public transit and runs 24 /7 so people without cars can get to work", "comment": "Better public transit and runs 24 /7 so people without cars can get to work. Also more stops added in residential areas.", "raw_cause": "Better public transit and runs 24 /7", "raw_effect": "people without cars can get to work"}, {"participant_id": "305", "span": "A clean, efficient public transportation system would be a huge help to those with limited ability or desire to drive", "comment": "A clean, efficient public transportation system would be a huge help to those with limited ability or desire to drive.", "raw_cause": "a clean, efficient public transportation system", "raw_effect": "those with limited ability or desire to drive"}]}, {"source": "Pedestrian Infrastructure", "target": "Traffic Accidents", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "272", "span": "decrease likelihood of accidents", "comment": "Install new sidewalks along major roads, like Three Springs, and city-wide bike routes, to decrease likelihood of accidents", "raw_cause": "Install new sidewalks along major roads, like Three Springs, and city-wide bike routes", "raw_effect": "likelihood of accidents"}]}, {"source": "Rental Property Development", "target": "Local Government Jurisdiction", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "1001", "span": "Overdevelopment of rental property is detrimental to cities.", "comment": "Overdevelopment of rental property is detrimental to cities.  Renters do not pay property tax.  Schools suffer when the tax base is eroded.", "raw_cause": "Overdevelopment of rental property", "raw_effect": "cities"}]}, {"source": "Tax Base", "target": "Public School System", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "1001", "span": "Schools suffer when the tax base is eroded.", "comment": "Overdevelopment of rental property is detrimental to cities.  Renters do not pay property tax.  Schools suffer when the tax base is eroded.", "raw_cause": "erosion of the tax base", "raw_effect": "schools"}]}, {"source": "Traffic Enforcement", "target": "City Revenue", "polarity": "+", "support": 2, "conflict": false, "quotes": [{"participant_id": "646", "span": "more traffic enforcement means more $$$ for the city", "comment": "install traffic cameras and enforce running of stop lights. more traffic enforcement means more $$$ for the city.", "raw_cause": "more traffic enforcement", "raw_effect": "more $$$ for the city"}, {"participant_id": "646", "span": "more tickets = more compliance and more $$$$$", "comment": "Police do a shameful job of enforcing traffic laws. more tickets = more compliance and more $$$$$.", "raw_cause": "more tickets", "raw_effect": "more compliance and more $$$$$"}, {"participant_id": "746", "span": "This would reduce accidents, traffic flow and add $", "comment": "BG needs to install traffic cameras that help police intersections like Gallatin, TN.  This would reduce accidents, traffic flow and add $", "raw_cause": "traffic cameras", "raw_effect": "revenue"}]}, {"source": "Traffic Enforcement", "target": "Traffic Accidents", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "746", "span": "This would reduce accidents", "comment": "BG needs to install traffic cameras that help police intersections like Gallatin, TN.  This would reduce accidents, traffic flow and add $", "raw_cause": "traffic cameras", "raw_effect": "accidents"}]}, {"source": "City Revenue", "target": "Voter Participation", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "36", "span": "$ don't buy vote", "comment": "One should not be able to literally \"buy\" their way into ability to vote in an election in a locality they do not live in.  $ don't buy vote", "raw_cause": "$", "raw_effect": "vote"}]}, {"source": "Poverty Reduction", "target": "Quality of Life", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "858", "span": "Reducing poverty will enhance the quality of life", "comment": "Reducing poverty will enhance the quality of life for everyone in our community regardless of status.", "raw_cause": "Reducing poverty", "raw_effect": "quality of life"}]}, {"source": "Quality of Life", "target": "Business Attraction", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "Beautification projects and other quality-of-life enhancements like parks and libraries help attract new residents and industries to our city/county", "comment": "Beautification projects and other quality-of-life enhancements like parks and libraries help attract new residents and industries to our city/county.", "raw_cause": "Beautification projects and other quality-of-life enhancements like parks and libraries", "raw_effect": "attract new residents and industries to our city/county"}]}, {"source": "Local Government Corruption", "target": "Community Well-Being", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "706", "span": "Bowling Green would be better if it didn't have the \"Good Ole Boy\" system", "comment": "Bowling Green would be better if it didn't have the \"Good Ole Boy\" system among so many.", "raw_cause": "the \"Good Ole Boy\" system", "raw_effect": "Bowling Green being better"}]}, {"source": "Law Enforcement", "target": "Public Safety", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "maintain safety", "comment": "Houston \"courtesy police\" maintain safety on access rds enforcing right of way & parking/litter rules, assist traffic flow - we need!", "raw_cause": "courtesy police", "raw_effect": "safety"}]}, {"source": "Law Enforcement", "target": "Traffic Flow", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "assist traffic flow", "comment": "Houston \"courtesy police\" maintain safety on access rds enforcing right of way & parking/litter rules, assist traffic flow - we need!", "raw_cause": "courtesy police", "raw_effect": "traffic flow"}]}, {"source": "Law Enforcement", "target": "Parking Enforcement", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "maintain legal parking", "comment": "Extra police, or parking enforcement unit should be on duty during events to maintain legal parking", "raw_cause": "Extra police, or parking enforcement unit", "raw_effect": "legal parking"}]}, {"source": "Public Safety", "target": "Community Well-Being", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "277", "span": "When you prioritize the safety of people over automobile speed, all kinds of positive things happen", "comment": "When you prioritize the safety of people over automobile speed, all kinds of positive things happen. #slowthecars", "raw_cause": "prioritizing the safety of people over automobile speed", "raw_effect": "all kinds of positive things happen"}]}, {"source": "Road Flooding", "target": "Traffic Accidents", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "540", "span": "makes driving very dangerous", "comment": "city needs to work on water run off when we have a lot of rain.. to many places flood on roadways makes driving very dangerous..", "raw_cause": "flood on roadways", "raw_effect": "driving very dangerous"}]}, {"source": "Mixed Use Development", "target": "Community Well-Being", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "403", "span": "make our community better", "comment": "We need urban planning to ensure that mixed use housing, shopping and new neighborhoods are created to make our community better", "raw_cause": "mixed use housing, shopping and new neighborhoods", "raw_effect": "our community better"}]}, {"source": "Rental Property Taxation", "target": "Urban Development", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "8", "span": "Rental property taxes should be reduced for private landlords to encourage them to develop more", "comment": "Rental property taxes should be reduced for private landlords to encourage them to develop more, as opposed to large ones like Chandler.", "raw_cause": "reducing rental property taxes for private landlords", "raw_effect": "encourage them to develop more"}]}, {"source": "Judicial Bias", "target": "Unspecified Variable", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "345", "span": "District judges are biased towards large local companies to the detriment of individuals", "comment": "District judges are biased towards large local companies to the detriment of individuals.", "raw_cause": "District judges being biased towards large local companies", "raw_effect": "individuals"}]}, {"source": "Left Turn Restrictions", "target": "Traffic Flow", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "323", "span": "block left turns on the busy parts of the by-pass so people don't block everyone else trying to turn", "comment": "We need to block left turns on the busy parts of the by-pass so people don't block everyone else trying to turn.", "raw_cause": "blocking left turns on the busy parts of the by-pass", "raw_effect": "people blocking everyone else trying to turn"}]}, {"source": "Immigrant and Refugee Population", "target": "University Community Relations", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "314", "span": "Bowling Green's refugee, immigrant, and international student population improves the university and the community", "comment": "Bowling Green's refugee, immigrant, and international student population improves the university and the community.", "raw_cause": "Bowling Green's refugee, immigrant, and international student population", "raw_effect": "the university and the community"}]}, {"source": "Immigrant and Refugee Population", "target": "Local Government Jurisdiction", "polarity": "+", "support": 2, "conflict": false, "quotes": [{"participant_id": "274", "span": "Refugee neighbors enrich our city's landscape", "comment": "Refugee neighbors enrich our city's landscape and we should find more ways to welcome and integrate them into the life of the city.", "raw_cause": "Refugee neighbors", "raw_effect": "our city's landscape"}, {"participant_id": "0", "span": "Our local immigrant population has, overall, been a benefit to our city and county", "comment": "Our local immigrant population has, overall, been a benefit to our city and county.", "raw_cause": "Our local immigrant population", "raw_effect": "our city and county"}]}, {"source": "Bicycle Infrastructure", "target": "Unspecified Variable", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "308", "span": "Developing more bike trails into surrounding areas of the city would allow for a more developed both transport and recreational experiences", "comment": "Developing more bike trails into surrounding areas of the city would allow for a more developed both transport and recreational experiences", "raw_cause": "developing more bike trails into surrounding areas of the city", "raw_effect": "a more developed both transport and recreational experiences"}]}, {"source": "HOA Regulations", "target": "Animal Control Regulations", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "Relax restrictions on fencing in Home Owners Associations to promote people keeping animals on leashes or in fenced yards", "comment": "Relax restrictions on fencing in Home Owners Associations to promote people keeping animals on leashes or in fenced yards.", "raw_cause": "relaxing restrictions on fencing in Home Owners Associations", "raw_effect": "people keeping animals on leashes or in fenced yards"}]}, {"source": "Business Attraction", "target": "Local Consumer Spending", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "289", "span": "keep residents from driving to Nashville on weekends", "comment": "Bowling Green needs to attract business like Costco and Trader Joe's to keep residents from driving to Nashville on weekends", "raw_cause": "attract business like Costco and Trader Joe's", "raw_effect": "residents driving to Nashville on weekends"}]}, {"source": "Park Amenities", "target": "Community Engagement", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "284", "span": "It inspires imagination, creativity and sharing", "comment": "A favorite place to visit (elsewhere) is a park filled with gently used toys (donated).  It inspires imagination, creativity and sharing.", "raw_cause": "a park filled with gently used toys (donated)", "raw_effect": "imagination, creativity and sharing"}]}, {"source": "Green Space Development", "target": "Traffic Congestion", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "272", "span": "decrease congestion", "comment": "Increase green spaces, especially near mall, to decrease congestion and improve \"green\" status", "raw_cause": "Increase green spaces, especially near mall", "raw_effect": "congestion"}]}, {"source": "Green Space Development", "target": "Environmental Sustainability", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "272", "span": "improve \"green\" status", "comment": "Increase green spaces, especially near mall, to decrease congestion and improve \"green\" status", "raw_cause": "Increase green spaces, especially near mall", "raw_effect": "green status"}]}, {"source": "Business Development Grants", "target": "Graduate Retention", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "278", "span": "encourages WKU grads to stay in Bowling Green", "comment": "Institute a business development grant that encourages WKU grads to stay in Bowling Green by starting local businesses.", "raw_cause": "business development grant", "raw_effect": "WKU grads to stay in Bowling Green"}]}, {"source": "Arts and Culture", "target": "Local Government Jurisdiction", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "274", "span": "The arts enrich our city", "comment": "The arts enrich our city.", "raw_cause": "The arts", "raw_effect": "our city"}]}, {"source": "Rent Control Legislation", "target": "Unspecified Variable", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "276", "span": "stabilize the constant increase in rates", "comment": "Enact rent control laws to stabilize the constant increase in rates.", "raw_cause": "Enact rent control laws", "raw_effect": "constant increase in rates"}]}, {"source": "Road Closures", "target": "Traffic Congestion", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "makes access to Nashville Rd take 3 times as long", "comment": "The road closure between Shawnee and Patton Way makes access to Nashville Rd take 3 times as long and is a major annoyance.", "raw_cause": "The road closure between Shawnee and Patton Way", "raw_effect": "access to Nashville Rd take 3 times as long"}]}, {"source": "Traffic Signal Timing", "target": "Traffic Congestion", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "82", "span": "time stoplights correctly during rush hour to prevent complete gridlock", "comment": "The city should actually time stoplights correctly during rush hour to prevent complete gridlock", "raw_cause": "timing stoplights correctly during rush hour", "raw_effect": "complete gridlock"}]}, {"source": "Riverfront Development", "target": "Community Engagement", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "47", "span": "Something needs to be done with the river area- river walk, park, restaurants, summer events- to give the communities ways to get together", "comment": "Something needs to be done with the river area- river walk, park, restaurants, summer events- to give the communities ways to get together.", "raw_cause": "doing something with the river area (river walk, park, restaurants, summer events)", "raw_effect": "giving the communities ways to get together"}]}, {"source": "Employee Benefits", "target": "Temporary Employment Practices", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "36", "span": "garbage token health plans designed to prevent temp services paying $166/month Obamacare emp. fee", "comment": "City should bar garbage token health plans designed to prevent temp services paying $166/month Obamacare emp. fee. Let ppl get subsidy.", "raw_cause": "garbage token health plans", "raw_effect": "temp services paying $166/month Obamacare emp. fee"}]}, {"source": "Labor Regulations", "target": "Academic Employment Conditions", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "36", "span": "non-competes, similar to North Dakota/California, as driving destitution in non-tenure work force", "comment": "City should bar non-competes, similar to North Dakota/California, as driving destitution in non-tenure work force. Be heroic destination.", "raw_cause": "non-competes", "raw_effect": "destitution in non-tenure work force"}]}, {"source": "Zoning and Planning", "target": "Pedestrian Infrastructure", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "13", "span": "a sift in city planning and zoning to make BG a more walkable city", "comment": "I would like to see a sift in city planning and zoning to make BG a more walkable city with better sidewalk planning", "raw_cause": "a shift in city planning and zoning", "raw_effect": "BG a more walkable city"}]}, {"source": "Private School Funding", "target": "Public School System", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "If private schools were to get a share of Federal or State education dollars, it would hurt public schools", "comment": "If private schools were to get a share of Federal or State education dollars, it would hurt public schools.", "raw_cause": "private schools getting a share of Federal or State education dollars", "raw_effect": "public schools"}]}, {"source": "Drug Addiction Treatment", "target": "Opioid Crisis", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "In order to better combat the opioid epidemic, it is time to view drug addiction as a health problem rather than a criminal justice problem", "comment": "In order to better combat the opioid epidemic, it is time to view drug addiction as a health problem rather than a criminal justice problem.", "raw_cause": "viewing drug addiction as a health problem rather than a criminal justice problem", "raw_effect": "opioid epidemic"}]}, {"source": "Police Community Relations", "target": "Law Enforcement", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "Local law enforcement would benefit from additional training in community relations", "comment": "Local law enforcement would benefit from additional training in community relations.", "raw_cause": "additional training in community relations", "raw_effect": "Local law enforcement"}]}, {"source": "Higher Education Funding", "target": "Higher Education Tuition", "polarity": "+", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "University management bears more responsibility than federal and state education funding cuts for tuition rising so much over the years", "comment": "University management bears more responsibility than federal and state education funding cuts for tuition rising so much over the years.", "raw_cause": "University management and federal and state education funding cuts", "raw_effect": "tuition rising so much over the years"}]}, {"source": "Higher Education Funding", "target": "Public Pension Crisis", "polarity": "-", "support": 1, "conflict": false, "quotes": [{"participant_id": "0", "span": "make up the pension fund crisis by learning to live with budget cuts", "comment": "Local schools should help make up the pension fund crisis by learning to live with budget cuts.", "raw_cause": "learning to live with budget cuts", "raw_effect": "pension fund crisis"}]}], "loops": []};
+const svg = document.getElementById('viz');
+const wrap = document.getElementById('vizwrap');
+const tooltip = document.getElementById('tooltip');
+const panel = document.getElementById('panel');
+const css = getComputedStyle(document.querySelector('.viz-root'));
+const COL = { '+': css.getPropertyValue('--pos').trim(), '-': css.getPropertyValue('--neg').trim() };
+const W = wrap.clientWidth || 900, H = 640;
+svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+const nodes = GRAPH.nodes.map(n => ({...n,
+  x: W/2 + (Math.random()-0.5)*W*0.8, y: H/2 + (Math.random()-0.5)*H*0.8,
+  r: Math.min(22, 7 + Math.sqrt(n.n_claims)*2.4)}));
+const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
+const edges = GRAPH.edges.map(e => ({...e, s: byId[e.source], t: byId[e.target]}));
+
+// force simulation (precomputed)
+for (let it = 0; it < 420; it++) {
+  const k = 1 - it/420;
+  for (const a of nodes) { a.fx = (W/2 - a.x)*0.004; a.fy = (H/2 - a.y)*0.004; }
+  for (let i = 0; i < nodes.length; i++) for (let j = i+1; j < nodes.length; j++) {
+    const a = nodes[i], b = nodes[j];
+    let dx = a.x-b.x, dy = a.y-b.y; let d2 = dx*dx+dy*dy || 1; const d = Math.sqrt(d2);
+    const rep = 2600/d2; dx/=d; dy/=d;
+    a.fx += dx*rep; a.fy += dy*rep; b.fx -= dx*rep; b.fy -= dy*rep;
+  }
+  for (const e of edges) {
+    let dx = e.t.x-e.s.x, dy = e.t.y-e.s.y; const d = Math.sqrt(dx*dx+dy*dy)||1;
+    const want = 120, f = (d-want)*0.012; dx/=d; dy/=d;
+    e.s.fx += dx*f; e.s.fy += dy*f; e.t.fx -= dx*f; e.t.fy -= dy*f;
+  }
+  for (const n of nodes) {
+    n.x = Math.max(30, Math.min(W-30, n.x + n.fx*14*k));
+    n.y = Math.max(26, Math.min(H-30, n.y + n.fy*14*k));
+  }
+}
+
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k,v] of Object.entries(attrs)) e.setAttribute(k, v);
+  (parent || svg).appendChild(e); return e;
+}
+const defs = el('defs', {});
+for (const [pol, colr] of Object.entries(COL)) {
+  const m = el('marker', {id: 'arr'+(pol==='+'?'p':'n'), viewBox: '0 0 10 10', refX: 9, refY: 5,
+    markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse'}, defs);
+  el('path', {d: 'M 0 1 L 9 5 L 0 9 z', fill: colr}, m);
+}
+const edgeG = el('g', {}), nodeG = el('g', {});
+
+function edgePath(e) {
+  const dx = e.t.x-e.s.x, dy = e.t.y-e.s.y, d = Math.sqrt(dx*dx+dy*dy)||1;
+  const nx = -dy/d, ny = dx/d, bend = 14;
+  const mx = (e.s.x+e.t.x)/2 + nx*bend, my = (e.s.y+e.t.y)/2 + ny*bend;
+  const tr = e.t.r + 3, ex = e.t.x - dx/d*tr, ey = e.t.y - dy/d*tr;
+  return {d: `M ${e.s.x} ${e.s.y} Q ${mx} ${my} ${ex} ${ey}`, mx, my};
+}
+function showTip(html, evt) {
+  tooltip.innerHTML = html; tooltip.style.display = 'block';
+  const r = wrap.getBoundingClientRect();
+  tooltip.style.left = Math.min(evt.clientX - r.left + 14, r.width - 310) + 'px';
+  tooltip.style.top  = (evt.clientY - r.top + 12) + 'px';
+}
+function hideTip() { tooltip.style.display = 'none'; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+edges.forEach((e, i) => {
+  const p = edgePath(e);
+  e.line = el('path', {class: 'edgeline', d: p.d, stroke: COL[e.polarity],
+    'stroke-width': Math.min(6, 1.6 + (e.support-1)*1.4),
+    'marker-end': `url(#arr${e.polarity==='+'?'p':'n'})`}, edgeG);
+  e.glyph = el('text', {class: 'polglyph', x: p.mx, y: p.my - 3, 'text-anchor': 'middle'}, edgeG);
+  e.glyph.textContent = e.polarity === '+' ? '+' : '−';
+  const hit = el('path', {class: 'edgehit', d: p.d}, edgeG);
+  hit.addEventListener('mousemove', evt => showTip(
+    `<b>${esc(e.source)}</b> ${e.polarity==='+'?'increases':'reduces'} <b>${esc(e.target)}</b>` +
+    `<br><span style="color:var(--ink-3)">${e.support} independent participant${e.support>1?'s':''}` +
+    `${e.conflict ? ' · opposite polarity also asserted' : ''} · click for quotes</span>`, evt));
+  hit.addEventListener('mouseleave', hideTip);
+  hit.addEventListener('click', () => showQuotes(e));
+  e.hit = hit;
+});
+
+nodes.forEach(n => {
+  n.c = el('circle', {class: 'node', cx: n.x, cy: n.y, r: n.r}, nodeG);
+  n.label = el('text', {class: 'nlabel', x: n.x, y: n.y - n.r - 5, 'text-anchor': 'middle'}, nodeG);
+  n.label.textContent = n.id;
+  n.c.addEventListener('mousemove', evt => showTip(
+    `<b>${esc(n.id)}</b><br><span style="color:var(--ink-3)">appears in ${n.n_claims} claim${n.n_claims>1?'s':''}</span>`, evt));
+  n.c.addEventListener('mouseleave', hideTip);
+  let drag = null;
+  n.c.addEventListener('mousedown', evt => { drag = {dx: n.x-evt.clientX, dy: n.y-evt.clientY}; evt.preventDefault(); });
+  window.addEventListener('mousemove', evt => {
+    if (!drag) return;
+    n.x = evt.clientX + drag.dx; n.y = evt.clientY + drag.dy; redraw();
+  });
+  window.addEventListener('mouseup', () => drag = null);
+});
+
+function redraw() {
+  for (const n of nodes) {
+    n.c.setAttribute('cx', n.x); n.c.setAttribute('cy', n.y);
+    n.label.setAttribute('x', n.x); n.label.setAttribute('y', n.y - n.r - 5);
+  }
+  for (const e of edges) {
+    const p = edgePath(e);
+    e.line.setAttribute('d', p.d); e.hit.setAttribute('d', p.d);
+    e.glyph.setAttribute('x', p.mx); e.glyph.setAttribute('y', p.my - 3);
+  }
+}
+
+function showQuotes(e) {
+  let h = `<h2>${esc(e.source)} ${e.polarity==='+'?'→ increases →':'→ reduces →'} ${esc(e.target)}</h2>`;
+  if (e.conflict) h += `<div class="conflictnote">Residents also asserted the opposite polarity for this pair — see table view.</div>`;
+  for (const q of e.quotes) {
+    h += `<div class="quote"><div class="qspan">“${esc(q.span)}”</div>` +
+         `<div class="qfull">${esc(q.comment)}</div>` +
+         `<div class="qpid">participant ${esc(q.participant_id)}</div></div>`;
+  }
+  panel.innerHTML = h;
+}
+
+// loops
+const loopsRow = document.getElementById('loopsrow');
+if (GRAPH.loops.length === 0) {
+  const d = document.createElement('div'); d.className = 'loops-empty';
+  d.textContent = 'No closed feedback loops at current thresholds — residents assert single links; loops would close only across more claims (finding, not failure).';
+  loopsRow.replaceWith(d);
+} else {
+  GRAPH.loops.forEach((L, i) => {
+    const chip = document.createElement('button'); chip.className = 'loopchip';
+    chip.innerHTML = `<b>${L.type === 'R' ? 'R' : 'B'}${i+1}</b> ${L.nodes.map(esc).join(' → ')} ↺`;
+    chip.title = L.type === 'R' ? 'Reinforcing loop' : 'Balancing loop';
+    chip.addEventListener('click', () => highlightLoop(L, chip));
+    loopsRow.appendChild(chip);
+  });
+}
+let activeChip = null;
+function highlightLoop(L, chip) {
+  document.querySelectorAll('.loopchip').forEach(c => c.classList.remove('active'));
+  if (activeChip === chip) { activeChip = null; edges.forEach(e => e.line.classList.remove('dim')); nodes.forEach(n => { n.c.classList.remove('dim'); n.label.classList.remove('dim'); }); return; }
+  activeChip = chip; chip.classList.add('active');
+  const inLoop = new Set();
+  for (let i = 0; i < L.nodes.length; i++) inLoop.add(L.nodes[i] + '→' + L.nodes[(i+1) % L.nodes.length]);
+  const nodeSet = new Set(L.nodes);
+  edges.forEach(e => e.line.classList.toggle('dim', !inLoop.has(e.source + '→' + e.target)));
+  nodes.forEach(n => { const on = nodeSet.has(n.id); n.c.classList.toggle('dim', !on); n.label.classList.toggle('dim', !on); });
+}
+
+// table view
+const tbody = document.querySelector('#edgetable tbody');
+[...edges].sort((a,b) => b.support - a.support).forEach(e => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${esc(e.source)}</td><td>${e.polarity}</td><td>${esc(e.target)}</td>` +
+                 `<td class="num">${e.support}${e.conflict ? ' (conflict)' : ''}</td>`;
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
