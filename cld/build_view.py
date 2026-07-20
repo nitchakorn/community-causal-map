@@ -88,6 +88,7 @@ TEMPLATE = r"""<!doctype html>
        County civic conversation (607 comments, The American Assembly / Polis). Every link is backed by
        verbatim quotes — click any arrow to read them. Suggestions without an asserted mechanism are
        not drawn.</p>
+    <p style="font-size:12.5px;color:var(--ink-3);line-height:1.55;margin-top:10px">Built on <a href="https://github.com/Jigsaw-Code/sensemaking-tools" style="color:var(--pos)">Google Jigsaw&rsquo;s sensemaking-tools</a>, used under Apache 2.0. Independent extension by Nitchakorn Tangs, not affiliated with or endorsed by Google or Jigsaw.</p>
   </header>
   <div class="legend" role="list">
     <span class="key"><span class="swatch" style="border-color: var(--pos)"></span>increases / promotes (+)</span>
@@ -283,11 +284,11 @@ if (alpha > 0.02) requestAnimationFrame(animate); else redraw();
 
 
 def main() -> None:
-  graph = json.load(open("cld/causal_graph.json", encoding="utf-8"))
+  graph = json.load(open("data/causal_graph.json", encoding="utf-8"))
   html = TEMPLATE.replace('"__GRAPH__"', json.dumps(graph, ensure_ascii=False))
-  with open("cld/cld_view.html", "w", encoding="utf-8") as f:
+  with open("cld_view.html", "w", encoding="utf-8") as f:
     f.write(html)
-  print(f"wrote cld/cld_view.html nodes={len(graph['nodes'])} "
+  print(f"wrote cld_view.html nodes={len(graph['nodes'])} "
         f"edges={len(graph['edges'])} loops={len(graph['loops'])}")
 
 

@@ -19,43 +19,49 @@
   .sub { color: var(--ink2); font-size: 15px; margin-top: 10px; line-height: 1.55; }
   .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 26px; }
   @media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
-  a.card { display: block; background: var(--card); border: 1px solid var(--border);
+  .card { display: block; background: var(--card); border: 1px solid var(--border);
            border-radius: 12px; padding: 18px; text-decoration: none; color: var(--ink1); }
   a.card:hover { border-color: var(--accent); }
-  a.card h2 { font-size: 16px; font-weight: 650; }
-  a.card h2 span { color: var(--accent); }
-  a.card p { color: var(--ink2); font-size: 13px; margin-top: 7px; line-height: 1.5; }
+  .card h2 { font-size: 16px; font-weight: 650; }
+  .card h2 span.arrow { color: var(--accent); }
+  .card p { color: var(--ink2); font-size: 13px; margin-top: 7px; line-height: 1.5; }
+  .card.soon { opacity: 0.6; }
+  .badge { font-size: 11px; font-weight: 600; color: var(--ink3); border: 1px solid var(--border);
+           border-radius: 999px; padding: 2px 8px; margin-left: 7px; vertical-align: middle; }
+  .credit { font-size: 12.5px; color: var(--ink3); line-height: 1.55; margin-bottom: 13px; }
+  .credit a { color: var(--accent); }
   footer { color: var(--ink3); font-size: 12px; margin-top: 26px; line-height: 1.6; }
   footer a { color: var(--ink3); }
 </style>
 </head>
-<body><div id="sitenav" style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:6px;font:12.5px system-ui"><span style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#0b0b0b;font-weight:600;">Home</span><a href="report/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Report — sample</a><a href="report-full/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Report — full corpus</a><a href="cld.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Causal Map</a><a href="tool.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Try your data</a></div>
+<body><div id="sitenav" style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:6px;font:12.5px system-ui"><span style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#0b0b0b;font-weight:600;">Home</span><a href="report/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Report — sample</a><a href="report-full/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Report — full corpus</a><a href="cld.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Causal Map</a></div>
 <main>
+  <p class="credit">Built on <a href="https://github.com/Jigsaw-Code/sensemaking-tools">Google Jigsaw’s sensemaking-tools</a>, used under Apache 2.0. This is an independent extension by Nitchakorn Tangs. It is not affiliated with, nor endorsed by, Google or Jigsaw.</p>
   <h1>What should change in Bowling Green — and why residents think so</h1>
   <p class="sub">607 public comments from the 2018 Bowling Green / Warren County civic conversation,
      run through a full recreation of Google Jigsaw's Sensemaker pipeline, then extended with a
      causal-map layer Sensemaker doesn't have. Four linked views of the same voices:</p>
   <div class="cards">
     <a class="card" href="report-full/">
-      <h2>Interactive Report — Full Corpus <span>→</span></h2>
+      <h2>Interactive Report — Full Corpus <span class="arrow">→</span></h2>
       <p>All 607 comments through the production pipeline, self-evaluation (autoraters) on:
          discovered topics, opinion rollups, quotes ranked by constructiveness.</p>
     </a>
     <a class="card" href="report/">
-      <h2>Report — 200-Comment Sample <span>→</span></h2>
+      <h2>Report — 200-Comment Sample <span class="arrow">→</span></h2>
       <p>The first demo pass (no autoraters), kept for comparison — the self-check demotes
          most borderline opinion assignments, and the difference is visible.</p>
     </a>
     <a class="card" href="cld.html">
-      <h2>Community Causal Map <span>→</span></h2>
+      <h2>Community Causal Map <span class="arrow">→</span></h2>
       <p>The extension: 93 explicit causal claims extracted from residents' own words — what this
          community believes causes what, every arrow backed by verbatim quotes.</p>
     </a>
-    <a class="card" href="tool.html">
-      <h2>Try It on Your Data <span>→</span></h2>
-      <p>Upload any CSV of free-text responses and bring a Gemini key — the causal map computes
+    <div class="card soon">
+      <h2>Try It on Your Data <span class="badge">Coming soon</span></h2>
+      <p>Upload any CSV of free-text responses and bring a Gemini key, and the causal map computes
          entirely in your browser. Nothing is uploaded to any server.</p>
-    </a>
+    </div>
   </div>
   <footer>
     <a href="https://github.com/nitchakorn/community-causal-map">Code, method &amp; findings</a> ·

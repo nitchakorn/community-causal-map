@@ -11,9 +11,29 @@ ITEMS = [
     ("Report — sample", "report/", "report"),
     ("Report — full corpus", "report-full/", "reportfull"),
     ("Causal Map", "cld.html", "cld"),
-    ("Try your data", "tool.html", "tool"),
 ]
 HF_BASE = "https://nitchakorn.github.io/community-causal-map/"
+
+# Jigsaw is the upstream author of the pipeline these report pages ARE (near-verbatim,
+# just fed our data) — a small always-present credit is non-negotiable, not cosmetic.
+CREDIT_BADGE = (
+    '<a href="https://github.com/Jigsaw-Code/sensemaking-tools" target="_blank" rel="noopener"'
+    ' title="Independent extension by Nitchakorn Tangs — not affiliated with or endorsed by'
+    ' Google or Jigsaw." style="position:fixed;top:10px;left:10px;z-index:9999;'
+    'background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;'
+    'padding:5px 12px;text-decoration:none;color:#52514e;font:12.5px system-ui;'
+    'box-shadow:0 1px 6px rgba(0,0,0,0.07)">Built on Google Jigsaw’s sensemaking-tools ↗</a>'
+)
+
+
+def inject_credit(path: str) -> None:
+  s = open(path, encoding="utf-8").read()
+  s = re.sub(r'<a[^>]*id="creditbadge"[^>]*>.*?</a>', "", s, count=1, flags=re.S)
+  i = s.find("<body")
+  i = s.find(">", i) + 1
+  s = s[:i] + CREDIT_BADGE.replace('href=', 'id="creditbadge" href=', 1) + s[i:]
+  open(path, "w", encoding="utf-8").write(s)
+  print("credit ->", path)
 
 
 def pills(base: str, current: str) -> str:
@@ -65,12 +85,14 @@ def main() -> None:
   inject("docs/cld.html", "cld", "")
   if os.path.exists("docs/report/index.html"):
     inject("docs/report/index.html", "report", "../")
+    inject_credit("docs/report/index.html")
   if os.path.exists("docs/report-full/index.html"):
     inject("docs/report-full/index.html", "reportfull", "../")
+    inject_credit("docs/report-full/index.html")
   if os.path.exists("docs/tool.html"):
-    inject("docs/tool.html", "tool", "")
+    inject("docs/tool.html", "", "")
   # HF mirror: absolute links back to the canonical site
-  inject("hf_space/index.html", "tool", HF_BASE)
+  inject("hf_space/index.html", "", HF_BASE)
 
 
 if __name__ == "__main__":
