@@ -77,7 +77,7 @@
   circle.node:hover { stroke: var(--ink-2); }
 </style>
 </head>
-<body><div id="sitenav" style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:6px;font:12.5px system-ui"><a href="index.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Home</a><a href="report/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Interactive Report</a><a href="cld.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#0b0b0b;font-weight:600;">Causal Map</a></div>
+<body><div id="sitenav" style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:6px;font:12.5px system-ui"><a href="index.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Home</a><a href="report/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Report — sample</a><a href="report-full/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Report — full corpus</a><a href="cld.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#0b0b0b;font-weight:600;">Causal Map</a></div>
 <div class="viz-root">
   <header>
     <h1>How Bowling Green Thinks It Works — Community Causal Map</h1>
@@ -120,9 +120,10 @@ const nodes = GRAPH.nodes.map(n => ({...n,
 const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
 const edges = GRAPH.edges.map(e => ({...e, s: byId[e.source], t: byId[e.target]}));
 
-// force simulation (precomputed)
-for (let it = 0; it < 420; it++) {
-  const k = 1 - it/420;
+// live force simulation — animates on load, reheats on drag
+let dragNode = null, running = false;
+let alpha = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1;
+function step(k) {
   for (const a of nodes) { a.fx = (W/2 - a.x)*0.004; a.fy = (H/2 - a.y)*0.004; }
   for (let i = 0; i < nodes.length; i++) for (let j = i+1; j < nodes.length; j++) {
     const a = nodes[i], b = nodes[j];
@@ -136,10 +137,18 @@ for (let it = 0; it < 420; it++) {
     e.s.fx += dx*f; e.s.fy += dy*f; e.t.fx -= dx*f; e.t.fy -= dy*f;
   }
   for (const n of nodes) {
+    if (n === dragNode) continue;
     n.x = Math.max(30, Math.min(W-30, n.x + n.fx*14*k));
     n.y = Math.max(26, Math.min(H-30, n.y + n.fy*14*k));
   }
 }
+if (alpha === 0) { for (let it = 0; it < 420; it++) step(1 - it/420); }
+function animate() {
+  running = true;
+  if (alpha > 0.02) { step(alpha); alpha *= 0.99; redraw(); requestAnimationFrame(animate); }
+  else running = false;
+}
+function reheat(a) { alpha = Math.max(alpha, a); if (!running) requestAnimationFrame(animate); }
 
 const NS = 'http://www.w3.org/2000/svg';
 function el(tag, attrs, parent) {
@@ -196,12 +205,12 @@ nodes.forEach(n => {
     `<b>${esc(n.id)}</b><br><span style="color:var(--ink-3)">appears in ${n.n_claims} claim${n.n_claims>1?'s':''}</span>`, evt));
   n.c.addEventListener('mouseleave', hideTip);
   let drag = null;
-  n.c.addEventListener('mousedown', evt => { drag = {dx: n.x-evt.clientX, dy: n.y-evt.clientY}; evt.preventDefault(); });
+  n.c.addEventListener('mousedown', evt => { drag = {dx: n.x-evt.clientX, dy: n.y-evt.clientY}; dragNode = n; reheat(0.35); evt.preventDefault(); });
   window.addEventListener('mousemove', evt => {
     if (!drag) return;
-    n.x = evt.clientX + drag.dx; n.y = evt.clientY + drag.dy; redraw();
+    n.x = evt.clientX + drag.dx; n.y = evt.clientY + drag.dy; reheat(0.12); redraw();
   });
-  window.addEventListener('mouseup', () => drag = null);
+  window.addEventListener('mouseup', () => { drag = null; if (dragNode === n) dragNode = null; });
 });
 
 function redraw() {
@@ -262,6 +271,8 @@ const tbody = document.querySelector('#edgetable tbody');
                  `<td class="num">${e.support}${e.conflict ? ' (conflict)' : ''}</td>`;
   tbody.appendChild(tr);
 });
+
+if (alpha > 0.02) requestAnimationFrame(animate); else redraw();
 </script>
 </body>
 </html>

@@ -29,17 +29,22 @@
   footer a { color: var(--ink3); }
 </style>
 </head>
-<body><div id="sitenav" style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:6px;font:12.5px system-ui"><a href="index.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#0b0b0b;font-weight:600;">Home</a><a href="report/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Interactive Report</a><a href="cld.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Causal Map</a></div>
+<body><div id="sitenav" style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:6px;font:12.5px system-ui"><a href="index.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#0b0b0b;font-weight:600;">Home</a><a href="report/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Report — sample</a><a href="report-full/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Report — full corpus</a><a href="cld.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;">Causal Map</a></div>
 <main>
   <h1>What should change in Bowling Green — and why residents think so</h1>
   <p class="sub">607 public comments from the 2018 Bowling Green / Warren County civic conversation,
      run through a full recreation of Google Jigsaw's Sensemaker pipeline, then extended with a
-     causal-map layer Sensemaker doesn't have. Two linked views of the same voices:</p>
+     causal-map layer Sensemaker doesn't have. Three linked views of the same voices:</p>
   <div class="cards">
+    <a class="card" href="report-full/">
+      <h2>Interactive Report — Full Corpus <span>→</span></h2>
+      <p>All 607 comments through the production pipeline, self-evaluation (autoraters) on:
+         discovered topics, opinion rollups, quotes ranked by constructiveness.</p>
+    </a>
     <a class="card" href="report/">
-      <h2>Interactive Report <span>→</span></h2>
-      <p>The Sensemaker view: 8 discovered topics, opinion rollups, and residents' quotes ranked
-         by constructiveness scores.</p>
+      <h2>Report — 200-Comment Sample <span>→</span></h2>
+      <p>The first demo pass (no autoraters), kept for comparison — the self-check demotes
+         most borderline opinion assignments, and the difference is visible.</p>
     </a>
     <a class="card" href="cld.html">
       <h2>Community Causal Map <span>→</span></h2>

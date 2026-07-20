@@ -123,9 +123,10 @@ const nodes = GRAPH.nodes.map(n => ({...n,
 const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
 const edges = GRAPH.edges.map(e => ({...e, s: byId[e.source], t: byId[e.target]}));
 
-// force simulation (precomputed)
-for (let it = 0; it < 420; it++) {
-  const k = 1 - it/420;
+// live force simulation — animates on load, reheats on drag
+let dragNode = null, running = false;
+let alpha = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1;
+function step(k) {
   for (const a of nodes) { a.fx = (W/2 - a.x)*0.004; a.fy = (H/2 - a.y)*0.004; }
   for (let i = 0; i < nodes.length; i++) for (let j = i+1; j < nodes.length; j++) {
     const a = nodes[i], b = nodes[j];
@@ -139,10 +140,18 @@ for (let it = 0; it < 420; it++) {
     e.s.fx += dx*f; e.s.fy += dy*f; e.t.fx -= dx*f; e.t.fy -= dy*f;
   }
   for (const n of nodes) {
+    if (n === dragNode) continue;
     n.x = Math.max(30, Math.min(W-30, n.x + n.fx*14*k));
     n.y = Math.max(26, Math.min(H-30, n.y + n.fy*14*k));
   }
 }
+if (alpha === 0) { for (let it = 0; it < 420; it++) step(1 - it/420); }
+function animate() {
+  running = true;
+  if (alpha > 0.02) { step(alpha); alpha *= 0.99; redraw(); requestAnimationFrame(animate); }
+  else running = false;
+}
+function reheat(a) { alpha = Math.max(alpha, a); if (!running) requestAnimationFrame(animate); }
 
 const NS = 'http://www.w3.org/2000/svg';
 function el(tag, attrs, parent) {
@@ -199,12 +208,12 @@ nodes.forEach(n => {
     `<b>${esc(n.id)}</b><br><span style="color:var(--ink-3)">appears in ${n.n_claims} claim${n.n_claims>1?'s':''}</span>`, evt));
   n.c.addEventListener('mouseleave', hideTip);
   let drag = null;
-  n.c.addEventListener('mousedown', evt => { drag = {dx: n.x-evt.clientX, dy: n.y-evt.clientY}; evt.preventDefault(); });
+  n.c.addEventListener('mousedown', evt => { drag = {dx: n.x-evt.clientX, dy: n.y-evt.clientY}; dragNode = n; reheat(0.35); evt.preventDefault(); });
   window.addEventListener('mousemove', evt => {
     if (!drag) return;
-    n.x = evt.clientX + drag.dx; n.y = evt.clientY + drag.dy; redraw();
+    n.x = evt.clientX + drag.dx; n.y = evt.clientY + drag.dy; reheat(0.12); redraw();
   });
-  window.addEventListener('mouseup', () => drag = null);
+  window.addEventListener('mouseup', () => { drag = null; if (dragNode === n) dragNode = null; });
 });
 
 function redraw() {
@@ -265,6 +274,8 @@ const tbody = document.querySelector('#edgetable tbody');
                  `<td class="num">${e.support}${e.conflict ? ' (conflict)' : ''}</td>`;
   tbody.appendChild(tr);
 });
+
+if (alpha > 0.02) requestAnimationFrame(animate); else redraw();
 </script>
 </body>
 </html>
@@ -272,11 +283,11 @@ const tbody = document.querySelector('#edgetable tbody');
 
 
 def main() -> None:
-  graph = json.load(open("data/causal_graph.json", encoding="utf-8"))
+  graph = json.load(open("cld/causal_graph.json", encoding="utf-8"))
   html = TEMPLATE.replace('"__GRAPH__"', json.dumps(graph, ensure_ascii=False))
-  with open("cld_view.html", "w", encoding="utf-8") as f:
+  with open("cld/cld_view.html", "w", encoding="utf-8") as f:
     f.write(html)
-  print(f"wrote cld_view.html nodes={len(graph['nodes'])} "
+  print(f"wrote cld/cld_view.html nodes={len(graph['nodes'])} "
         f"edges={len(graph['edges'])} loops={len(graph['loops'])}")
 
 
