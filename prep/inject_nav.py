@@ -29,7 +29,13 @@ def pills(base: str, current: str) -> str:
         "padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);"
         + ("color:#0b0b0b;font-weight:600;" if cur else "color:#2a78d6;")
     )
-    links.append(f'<a href="{target}" style="{style}">{label}</a>')
+    if cur:
+      # the page you're already on: a plain label, never a (possibly cross-domain,
+      # possibly iframed) link back to itself
+      links.append(f'<span style="{style}">{label}</span>')
+      continue
+    target_attr = ' target="_blank" rel="noopener"' if base else ""
+    links.append(f'<a href="{target}" style="{style}"{target_attr}>{label}</a>')
   return (
       '<div id="sitenav" style="position:fixed;top:10px;right:10px;z-index:9999;'
       'display:flex;gap:6px;font:12.5px system-ui">' + "".join(links) + "</div>"
