@@ -15,11 +15,14 @@ def canonicalize(client: genai.Client, phrases: list[str]) -> dict[str, str]:
   listing = "\n".join(f"- {p}" for p in sorted(set(phrases)))
   prompt = (
       "These phrases are variables from causal claims in a civic conversation about "
-      "Bowling Green, Kentucky. Merge phrases that mean the same underlying variable.\n"
-      "Rules: canonical names are short Title-Case noun phrases (2-4 words), neutral "
-      "direction (e.g. 'Traffic Congestion' not 'less traffic'), specific enough to "
-      "distinguish genuinely different variables. Every input phrase must appear exactly "
-      "once as a key.\n"
+      "Bowling Green, Kentucky. Group them into a compact set of shared underlying variables.\n"
+      "Rules: canonical names are short Title-Case noun phrases (2-4 words). Aggregate BOLDLY — map "
+      "every phrase about the same underlying concept to ONE shared variable (e.g. 'Sidewalk "
+      "Availability', 'Pedestrian Walkways', 'Walkability' all -> one 'Walkability' variable), so the "
+      "map has connective structure instead of many one-off nodes; aim for far fewer variables than "
+      "input phrases. The ONE thing you must NOT do is map a phrase to a name meaning its opposite "
+      "direction (keep 'Driver Confusion' distinct from 'Traffic Clarity'; never rename 'Sidewalk "
+      "Availability' to 'Missing Sidewalks'). Every input phrase must appear exactly once as a key.\n"
       'Return ONLY JSON: {"mapping": {"<input phrase>": "<Canonical Name>", ...}}\n'
       "Phrases:\n" + listing
   )

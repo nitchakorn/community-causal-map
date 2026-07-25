@@ -254,7 +254,7 @@ def main() -> None:
                 "const tbody = document.querySelector('#edgetable tbody');\ntbody.innerHTML = '';")
 
   # wrap the whole render tail into boot()
-  start = t.index("const nodes = GRAPH.nodes.map")
+  start = t.index("const _deg = {")
   kick = "if (alpha > 0.02) requestAnimationFrame(animate); else redraw();"
   end = t.index(kick) + len(kick)
   body = t[start:end]

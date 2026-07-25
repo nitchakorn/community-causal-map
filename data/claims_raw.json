@@ -1,746 +1,594 @@
 [
  {
+  "participant_id": "1480",
+  "comment": "Doctors should not overreact to the opioid crisis. People in pain shouldn't suffer because others lack self control and abuse the system.",
+  "cause": "System Abuse",
+  "effect": "Patient Suffering",
+  "polarity": "+",
+  "span": "suffer because others lack self control and abuse the system"
+ },
+ {
+  "participant_id": "1640",
+  "comment": "Hawaii outlaws billboards tokeep the landscape from being blocked I would love to see Bowling Green billboard free",
+  "cause": "Billboard Availability",
+  "effect": "Landscape Visibility",
+  "polarity": "-",
+  "span": "billboards tokeep the landscape from being blocked"
+ },
+ {
+  "participant_id": "1611",
+  "comment": "We must ensure historic preservation codes are properly enforced in our historic districts; lack of consistency erodes our unique aesthetic.",
+  "cause": "Preservation Code Consistency",
+  "effect": "Aesthetic Uniqueness",
+  "polarity": "+",
+  "span": "lack of consistency erodes our unique aesthetic"
+ },
+ {
   "participant_id": "0",
   "comment": "Judge/prosecutors should not let influential family of victim push extraordinarily harsh sentences & create more victims, ruined young lives",
-  "cause": "extraordinarily harsh sentences",
-  "effect": "more victims, ruined young lives",
+  "cause": "Sentence Severity",
+  "effect": "Victim Count",
   "polarity": "+",
-  "span": "create"
+  "span": "push extraordinarily harsh sentences & create more victims"
  },
  {
   "participant_id": "1491",
   "comment": "Access Rd, east side of Scottsville Rd. in shopping dist causes congestion. Give right of way to access road or cross streets, not a mix!",
-  "cause": "Access Rd, east side of Scottsville Rd. in shopping dist",
-  "effect": "congestion",
+  "cause": "Access Roads",
+  "effect": "Traffic Congestion",
   "polarity": "+",
-  "span": "causes"
+  "span": "Access Rd, east side of Scottsville Rd. in shopping dist causes congestion"
  },
  {
   "participant_id": "1496",
   "comment": "Many people want something for nothing and if they don't get it they steal it instead of working for it.  We are producing a gimme society.",
-  "cause": "they don't get it",
-  "effect": "they steal it",
-  "polarity": "+",
+  "cause": "Resource Provision",
+  "effect": "Theft Rate",
+  "polarity": "-",
   "span": "if they don't get it they steal it"
- },
- {
-  "participant_id": "1496",
-  "comment": "Many people want something for nothing and if they don't get it they steal it instead of working for it.  We are producing a gimme society.",
-  "cause": "We",
-  "effect": "a gimme society",
-  "polarity": "+",
-  "span": "producing"
  },
  {
   "participant_id": "36",
   "comment": "The city and county work together to keep the low socieconomic status children out of certain schools. This reduces learning opportunities.",
-  "cause": "The city and county work together to keep the low socieconomic status children out of certain schools",
-  "effect": "learning opportunities",
+  "cause": "School Access",
+  "effect": "Learning Opportunities",
+  "polarity": "+",
+  "span": "keep the low socieconomic status children out of certain schools. This reduces learning opportunities"
+ },
+ {
+  "participant_id": "1506",
+  "comment": "I believe BGISD and WCS should be combined to lower tax payer overheads of multi-administration wastages",
+  "cause": "School District Consolidation",
+  "effect": "Taxpayer Overhead",
   "polarity": "-",
-  "span": "reduces"
+  "span": "BGISD and WCS should be combined to lower tax payer overheads"
  },
  {
   "participant_id": "1318",
   "comment": "Working folks need ordinances struck down that prevent them from assembling to bargain for better pay. benefits and working conditions.",
-  "cause": "ordinances",
-  "effect": "them from assembling",
+  "cause": "Local Ordinances",
+  "effect": "Labor Assembly",
   "polarity": "-",
-  "span": "prevent"
+  "span": "ordinances struck down that prevent them from assembling"
  },
  {
   "participant_id": "1298",
   "comment": "Doctors who prescribe pain and tranquilizing meds too easily fuel the drug dependency crisis.",
-  "cause": "Doctors who prescribe pain and tranquilizing meds too easily",
-  "effect": "the drug dependency crisis",
+  "cause": "Ease of Prescription",
+  "effect": "Drug Dependency",
   "polarity": "+",
-  "span": "fuel"
+  "span": "Doctors who prescribe pain and tranquilizing meds too easily fuel the drug dependency crisis"
  },
  {
   "participant_id": "1298",
   "comment": "American comfort and avoidance of any pain or suffering drives the drug dependency problem.",
-  "cause": "American comfort and avoidance of any pain or suffering",
-  "effect": "the drug dependency problem",
+  "cause": "Avoidance of Pain and Suffering",
+  "effect": "Drug Dependency",
   "polarity": "+",
-  "span": "drives"
+  "span": "American comfort and avoidance of any pain or suffering drives the drug dependency problem"
  },
  {
   "participant_id": "1298",
   "comment": "Individual unhappiness combined with easy legal and illegal availability of drugs drives the opioid crisis.",
-  "cause": "Individual unhappiness combined with easy legal and illegal availability of drugs",
-  "effect": "the opioid crisis",
+  "cause": "Drug Availability and Unhappiness",
+  "effect": "Opioid Crisis",
   "polarity": "+",
-  "span": "drives"
+  "span": "Individual unhappiness combined with easy legal and illegal availability of drugs drives the opioid crisis"
  },
  {
   "participant_id": "1307",
   "comment": "BG needs to increase recycling and trash bins around the parks and parkways to decrease trash and litter",
-  "cause": "increase recycling and trash bins around the parks and parkways",
-  "effect": "trash and litter",
+  "cause": "Recycling and Trash Bins",
+  "effect": "Trash and Litter",
   "polarity": "-",
-  "span": "decrease"
+  "span": "increase recycling and trash bins around the parks and parkways to decrease trash and litter"
  },
  {
   "participant_id": "278",
   "comment": "We need grocery store competition. Kroger doesn't even try because they don't have to. I'm sick of rotten produce. Let's get a Publix!",
-  "cause": "they don't have to",
-  "effect": "Kroger doesn't even try",
+  "cause": "Market Competition",
+  "effect": "Supermarket Effort",
   "polarity": "+",
-  "span": "because"
+  "span": "Kroger doesn't even try because they don't have to"
  },
  {
   "participant_id": "1261",
   "comment": "Need a better way to work with tenants in the downtown district. Too many come and go because they lack business skills.",
-  "cause": "they lack business skills",
-  "effect": "Too many come and go",
+  "cause": "Business Skills",
+  "effect": "Tenant Turnover",
+  "polarity": "-",
+  "span": "Too many come and go because they lack business skills"
+ },
+ {
+  "participant_id": "1259",
+  "comment": "City/county gov't. (in all of there forms) must reflect the racial/ethnic city/county population demographic to assist in recruitment/growth",
+  "cause": "Government Demographic Representation",
+  "effect": "Recruitment and Growth",
   "polarity": "+",
-  "span": "because"
+  "span": "must reflect the racial/ethnic city/county population demographic to assist in recruitment/growth"
+ },
+ {
+  "participant_id": "1216",
+  "comment": "You can't get a job in this county at a large place of employment if you have OLD DUI's on your record. This is an un-needed punishment!",
+  "cause": "Prior DUI Convictions",
+  "effect": "Employment Opportunities",
+  "polarity": "-",
+  "span": "You can't get a job in this county at a large place of employment if you have OLD DUI's on your record"
+ },
+ {
+  "participant_id": "1224",
+  "comment": "Lower taxes by auditing every department for total accountability & make cuts where possible. Stop city government waste.",
+  "cause": "Departmental Auditing",
+  "effect": "Tax Rates",
+  "polarity": "-",
+  "span": "Lower taxes by auditing every department"
+ },
+ {
+  "participant_id": "1171",
+  "comment": "Louisville rd area needs more businesses and restaurants extending out towards the factories to also bring in revenue from Edmonson Co.",
+  "cause": "Business and Restaurant Presence",
+  "effect": "External Revenue",
+  "polarity": "+",
+  "span": "businesses and restaurants extending out towards the factories to also bring in revenue"
+ },
+ {
+  "participant_id": "1165",
+  "comment": "The LEFT turning light at Nashville onto Dishman & the same for Scottsville onto Lovers Ln.. need to be longer to allow more to go through.",
+  "cause": "Turn Signal Duration",
+  "effect": "Traffic Throughput",
+  "polarity": "+",
+  "span": "need to be longer to allow more to go through"
+ },
+ {
+  "participant_id": "639",
+  "comment": "We need to SHADE street lamps. This actually increases visibility, reduces glare, and saves energy/ money. Using LEDs would save money, too.",
+  "cause": "Street Lamp Shading",
+  "effect": "Visibility",
+  "polarity": "+",
+  "span": "SHADE street lamps. This actually increases visibility"
+ },
+ {
+  "participant_id": "639",
+  "comment": "We need to SHADE street lamps. This actually increases visibility, reduces glare, and saves energy/ money. Using LEDs would save money, too.",
+  "cause": "Street Lamp Shading",
+  "effect": "Glare",
+  "polarity": "-",
+  "span": "SHADE street lamps. This actually increases visibility, reduces glare"
+ },
+ {
+  "participant_id": "639",
+  "comment": "We need to SHADE street lamps. This actually increases visibility, reduces glare, and saves energy/ money. Using LEDs would save money, too.",
+  "cause": "Street Lamp Shading",
+  "effect": "Energy Consumption",
+  "polarity": "-",
+  "span": "SHADE street lamps. This actually increases visibility, reduces glare, and saves energy"
+ },
+ {
+  "participant_id": "639",
+  "comment": "We need to SHADE street lamps. This actually increases visibility, reduces glare, and saves energy/ money. Using LEDs would save money, too.",
+  "cause": "LED Lamp Usage",
+  "effect": "Financial Expenditure",
+  "polarity": "-",
+  "span": "Using LEDs would save money"
  },
  {
   "participant_id": "1053",
   "comment": "Legalizing marijuana at the state level could produce substantial tax revenue, but if only BG did, it would cause problems.",
-  "cause": "Legalizing marijuana at the state level",
-  "effect": "substantial tax revenue",
+  "cause": "Marijuana Legalization",
+  "effect": "Tax Revenue",
   "polarity": "+",
   "span": "Legalizing marijuana at the state level could produce substantial tax revenue"
  },
  {
   "participant_id": "1053",
   "comment": "Legalizing marijuana at the state level could produce substantial tax revenue, but if only BG did, it would cause problems.",
-  "cause": "if only BG did",
-  "effect": "problems",
+  "cause": "Local Marijuana Legalization",
+  "effect": "Municipal Problems",
   "polarity": "+",
   "span": "if only BG did, it would cause problems"
  },
  {
   "participant_id": "1050",
   "comment": "Connect business parking lots to reduce unnecessary traffic on main roadways",
-  "cause": "Connect business parking lots",
-  "effect": "unnecessary traffic on main roadways",
+  "cause": "Parking Lot Connectivity",
+  "effect": "Main Roadway Traffic",
   "polarity": "-",
   "span": "Connect business parking lots to reduce unnecessary traffic on main roadways"
  },
  {
   "participant_id": "1053",
   "comment": "Animated digital business signs are a road hazard. They distract drivers.",
-  "cause": "Animated digital business signs",
-  "effect": "distract drivers",
+  "cause": "Animated Digital Business Signs",
+  "effect": "Driver Distraction",
   "polarity": "+",
-  "span": "They distract drivers."
- },
- {
-  "participant_id": "1050",
-  "comment": "Indoor swimming pools for public use and therapy year around without time restrictions due to special swim leagues. Encourage healthier life",
-  "cause": "special swim leagues",
-  "effect": "time restrictions",
-  "polarity": "+",
-  "span": "time restrictions due to special swim leagues"
+  "span": "They distract drivers"
  },
  {
   "participant_id": "1053",
   "comment": "Highway exits spur development, which would likely lead to undesireable suburban sprawl.",
-  "cause": "Highway exits",
-  "effect": "development",
+  "cause": "Highway Exits",
+  "effect": "Land Development",
   "polarity": "+",
   "span": "Highway exits spur development"
  },
  {
   "participant_id": "1053",
   "comment": "Highway exits spur development, which would likely lead to undesireable suburban sprawl.",
-  "cause": "development",
-  "effect": "undesireable suburban sprawl",
+  "cause": "Land Development",
+  "effect": "Suburban Sprawl",
   "polarity": "+",
   "span": "development, which would likely lead to undesireable suburban sprawl"
  },
  {
-  "participant_id": "1044",
-  "comment": "Better public transit and runs 24 /7 so people without cars can get to work. Also more stops added in residential areas.",
-  "cause": "Better public transit and runs 24 /7",
-  "effect": "people without cars can get to work",
-  "polarity": "+",
-  "span": "Better public transit and runs 24 /7 so people without cars can get to work"
- },
- {
   "participant_id": "1043",
   "comment": "Urban sprawl in Bowling Green is a major problem that has made this city less walking/bike friendly.",
-  "cause": "Urban sprawl in Bowling Green",
-  "effect": "walking/bike friendliness of the city",
+  "cause": "Urban Sprawl",
+  "effect": "Bike and Pedestrian Friendliness",
   "polarity": "-",
   "span": "Urban sprawl in Bowling Green is a major problem that has made this city less walking/bike friendly."
  },
  {
   "participant_id": "1001",
   "comment": "Overdevelopment of rental property is detrimental to cities.  Renters do not pay property tax.  Schools suffer when the tax base is eroded.",
-  "cause": "Overdevelopment of rental property",
-  "effect": "cities",
-  "polarity": "-",
-  "span": "Overdevelopment of rental property is detrimental to cities."
- },
- {
-  "participant_id": "1001",
-  "comment": "Overdevelopment of rental property is detrimental to cities.  Renters do not pay property tax.  Schools suffer when the tax base is eroded.",
-  "cause": "erosion of the tax base",
-  "effect": "schools",
-  "polarity": "-",
+  "cause": "Tax Base",
+  "effect": "School Quality",
+  "polarity": "+",
   "span": "Schools suffer when the tax base is eroded."
  },
  {
   "participant_id": "646",
   "comment": "install traffic cameras and enforce running of stop lights. more traffic enforcement means more $$$ for the city.",
-  "cause": "more traffic enforcement",
-  "effect": "more $$$ for the city",
+  "cause": "Traffic Enforcement",
+  "effect": "City Revenue",
   "polarity": "+",
-  "span": "more traffic enforcement means more $$$ for the city"
+  "span": "more traffic enforcement means more $$$ for the city."
  },
  {
   "participant_id": "646",
   "comment": "Police do a shameful job of enforcing traffic laws. more tickets = more compliance and more $$$$$.",
-  "cause": "more tickets",
-  "effect": "more compliance and more $$$$$",
+  "cause": "Traffic Tickets",
+  "effect": "Traffic Law Compliance",
   "polarity": "+",
-  "span": "more tickets = more compliance and more $$$$$"
+  "span": "more tickets = more compliance"
+ },
+ {
+  "participant_id": "646",
+  "comment": "Police do a shameful job of enforcing traffic laws. more tickets = more compliance and more $$$$$.",
+  "cause": "Traffic Tickets",
+  "effect": "City Revenue",
+  "polarity": "+",
+  "span": "more tickets = ... more $$$$$."
  },
  {
   "participant_id": "858",
   "comment": "Reducing poverty will enhance the quality of life for everyone in our community regardless of status.",
-  "cause": "Reducing poverty",
-  "effect": "quality of life",
-  "polarity": "+",
+  "cause": "Poverty Level",
+  "effect": "Quality of Life",
+  "polarity": "-",
   "span": "Reducing poverty will enhance the quality of life"
  },
  {
   "participant_id": "771",
   "comment": "Should be an interstate exit for the Woodburn area it could help decrease BG congestion and let people bypass BG all together",
-  "cause": "interstate exit for the Woodburn area",
-  "effect": "BG congestion",
+  "cause": "Interstate Exit Availability",
+  "effect": "Traffic Congestion",
   "polarity": "-",
-  "span": "it could help decrease BG congestion"
+  "span": "interstate exit for the Woodburn area it could help decrease BG congestion"
  },
  {
   "participant_id": "746",
   "comment": "BG needs to install traffic cameras that help police intersections like Gallatin, TN.  This would reduce accidents, traffic flow and add $",
-  "cause": "traffic cameras",
-  "effect": "accidents",
+  "cause": "Traffic Cameras",
+  "effect": "Accidents",
   "polarity": "-",
-  "span": "This would reduce accidents"
- },
- {
-  "participant_id": "746",
-  "comment": "BG needs to install traffic cameras that help police intersections like Gallatin, TN.  This would reduce accidents, traffic flow and add $",
-  "cause": "traffic cameras",
-  "effect": "revenue",
-  "polarity": "+",
-  "span": "This would reduce accidents, traffic flow and add $"
- },
- {
-  "participant_id": "706",
-  "comment": "Bowling Green would be better if it didn't have the \"Good Ole Boy\" system among so many.",
-  "cause": "the \"Good Ole Boy\" system",
-  "effect": "Bowling Green being better",
-  "polarity": "-",
-  "span": "Bowling Green would be better if it didn't have the \"Good Ole Boy\" system"
+  "span": "traffic cameras that help police intersections like Gallatin, TN.  This would reduce accidents"
  },
  {
   "participant_id": "1470",
   "comment": "Legalized Marijuana will not only assist Bowling Green in earning Tax revenue but will decrease the strain on our prison system. Win-Win.",
-  "cause": "Legalized Marijuana",
-  "effect": "earning Tax revenue",
+  "cause": "Marijuana Legalization",
+  "effect": "Tax Revenue",
   "polarity": "+",
   "span": "Legalized Marijuana will not only assist Bowling Green in earning Tax revenue"
  },
  {
   "participant_id": "1470",
   "comment": "Legalized Marijuana will not only assist Bowling Green in earning Tax revenue but will decrease the strain on our prison system. Win-Win.",
-  "cause": "Legalized Marijuana",
-  "effect": "the strain on our prison system",
+  "cause": "Marijuana Legalization",
+  "effect": "Prison System Strain",
   "polarity": "-",
-  "span": "will decrease the strain on our prison system"
+  "span": "Legalized Marijuana will not only assist Bowling Green in earning Tax revenue but will decrease the strain on our prison system."
  },
  {
-  "participant_id": "0",
-  "comment": "Houston \"courtesy police\" maintain safety on access rds enforcing right of way & parking/litter rules, assist traffic flow - we need!",
-  "cause": "courtesy police",
-  "effect": "safety",
-  "polarity": "+",
-  "span": "maintain safety"
- },
- {
-  "participant_id": "0",
-  "comment": "Houston \"courtesy police\" maintain safety on access rds enforcing right of way & parking/litter rules, assist traffic flow - we need!",
-  "cause": "courtesy police",
-  "effect": "traffic flow",
-  "polarity": "+",
-  "span": "assist traffic flow"
- },
- {
-  "participant_id": "36",
-  "comment": "One should not be able to literally \"buy\" their way into ability to vote in an election in a locality they do not live in.  $ don't buy vote",
-  "cause": "$",
-  "effect": "vote",
+  "participant_id": "1456",
+  "comment": "Provide a food assistance program for college students as students lots of times do not qualify for food stamps due to living on campus",
+  "cause": "On-Campus Living",
+  "effect": "Food Stamp Eligibility",
   "polarity": "-",
-  "span": "$ don't buy vote"
+  "span": "do not qualify for food stamps due to living on campus"
  },
  {
   "participant_id": "0",
-  "comment": "Extra police, or parking enforcement unit should be on duty during events to maintain legal parking",
-  "cause": "Extra police, or parking enforcement unit",
-  "effect": "legal parking",
+  "comment": "Make areas around WKU's campus livable for college students. Eliminating section 8 housing will lead to less crime & lower cost of attendance.",
+  "cause": "Section 8 Housing",
+  "effect": "Crime Rate",
   "polarity": "+",
-  "span": "maintain legal parking"
+  "span": "Eliminating section 8 housing will lead to less crime"
  },
  {
-  "participant_id": "566",
-  "comment": "People want it all, without paying for anything. A healthy community requires taxes people.",
-  "cause": "taxes",
-  "effect": "healthy community",
+  "participant_id": "0",
+  "comment": "Make areas around WKU's campus livable for college students. Eliminating section 8 housing will lead to less crime & lower cost of attendance.",
+  "cause": "Section 8 Housing",
+  "effect": "Cost of Attendance",
   "polarity": "+",
-  "span": "A healthy community requires taxes"
+  "span": "Eliminating section 8 housing will lead to less crime & lower cost of attendance."
  },
  {
-  "participant_id": "462",
-  "comment": "Some county roads, such as Hammett Hill Road, are so narrow it's hard for two cars to pass. Surely they could make them a little wider.",
-  "cause": "narrow roads",
-  "effect": "hard for two cars to pass",
+  "participant_id": "1354",
+  "comment": "Better parking around the square would draw in more college students who like to shop but can not find parking downtown.",
+  "cause": "Parking Availability",
+  "effect": "College Student Presence",
   "polarity": "+",
-  "span": "so narrow it's hard for two cars to pass"
+  "span": "Better parking around the square would draw in more college students"
  },
  {
   "participant_id": "540",
   "comment": "city needs to work on water run off when we have a lot of rain.. to many places flood on roadways makes driving very dangerous..",
-  "cause": "flood on roadways",
-  "effect": "driving very dangerous",
-  "polarity": "+",
-  "span": "makes driving very dangerous"
- },
- {
-  "participant_id": "460",
-  "comment": "Planning & Zoning need to do a better job of listening & working with residents. It's not next to their house, so they don't care!",
-  "cause": "It's not next to their house",
-  "effect": "they don't care",
-  "polarity": "+",
-  "span": "It's not next to their house, so they don't care"
- },
- {
-  "participant_id": "462",
-  "comment": "Parking lots should be monitored to prevent illegal parking in handicap spaces.",
-  "cause": "monitoring parking lots",
-  "effect": "illegal parking in handicap spaces",
+  "cause": "Roadway Flooding",
+  "effect": "Driving Safety",
   "polarity": "-",
-  "span": "monitored to prevent illegal parking"
- },
- {
-  "participant_id": "8",
-  "comment": "Our city should make a bid for Google Fiber to help compete with Spectrum and AT&T.",
-  "cause": "make a bid for Google Fiber",
-  "effect": "compete with Spectrum and AT&T",
-  "polarity": "+",
-  "span": "make a bid for Google Fiber to help compete"
+  "span": "flood on roadways makes driving very dangerous"
  },
  {
   "participant_id": "453",
   "comment": "If we cut a major program, WKU would lose in the revenue the program brings in, ultimately costing more money.",
-  "cause": "cut a major program",
-  "effect": "revenue",
-  "polarity": "-",
-  "span": "If we cut a major program, WKU would lose in the revenue"
- },
- {
-  "participant_id": "453",
-  "comment": "If we cut a major program, WKU would lose in the revenue the program brings in, ultimately costing more money.",
-  "cause": "program",
-  "effect": "revenue",
+  "cause": "Major Programs",
+  "effect": "WKU Revenue",
   "polarity": "+",
-  "span": "program brings in"
- },
- {
-  "participant_id": "410",
-  "comment": "New developments should help pay to widen the roads in the areas where they are increasing traffic.",
-  "cause": "New developments",
-  "effect": "traffic",
-  "polarity": "+",
-  "span": "they are increasing traffic"
- },
- {
-  "participant_id": "403",
-  "comment": "We need urban planning to ensure that mixed use housing, shopping and new neighborhoods are created to make our community better",
-  "cause": "mixed use housing, shopping and new neighborhoods",
-  "effect": "our community better",
-  "polarity": "+",
-  "span": "make our community better"
+  "span": "If we cut a major program, WKU would lose in the revenue the program brings in"
  },
  {
   "participant_id": "277",
   "comment": "When you prioritize the safety of people over automobile speed, all kinds of positive things happen. #slowthecars",
-  "cause": "prioritizing the safety of people over automobile speed",
-  "effect": "all kinds of positive things happen",
+  "cause": "Pedestrian Safety Prioritization",
+  "effect": "Positive Outcomes",
   "polarity": "+",
   "span": "When you prioritize the safety of people over automobile speed, all kinds of positive things happen"
  },
  {
   "participant_id": "365",
   "comment": "Shopping should be spread across all four corners of the county, so the traffic on Scottsville rd and Campbell lane will be improved.",
-  "cause": "spreading shopping across all four corners of the county",
-  "effect": "the traffic on Scottsville rd and Campbell lane will be improved",
-  "polarity": "+",
-  "span": "Shopping should be spread across all four corners of the county, so the traffic on Scottsville rd and Campbell lane will be improved"
- },
- {
-  "participant_id": "8",
-  "comment": "Rental property taxes should be reduced for private landlords to encourage them to develop more, as opposed to large ones like Chandler.",
-  "cause": "reducing rental property taxes for private landlords",
-  "effect": "encourage them to develop more",
-  "polarity": "+",
-  "span": "Rental property taxes should be reduced for private landlords to encourage them to develop more"
- },
- {
-  "participant_id": "345",
-  "comment": "District judges are biased towards large local companies to the detriment of individuals.",
-  "cause": "District judges being biased towards large local companies",
-  "effect": "individuals",
+  "cause": "Retail Geographic Dispersion",
+  "effect": "Traffic Congestion",
   "polarity": "-",
-  "span": "District judges are biased towards large local companies to the detriment of individuals"
+  "span": "Shopping should be spread across all four corners of the county, so the traffic on Scottsville rd and Campbell lane will be improved"
  },
  {
   "participant_id": "323",
   "comment": "We need to block left turns on the busy parts of the by-pass so people don't block everyone else trying to turn.",
-  "cause": "blocking left turns on the busy parts of the by-pass",
-  "effect": "people blocking everyone else trying to turn",
+  "cause": "Left Turn Restrictions",
+  "effect": "Traffic Blockage",
   "polarity": "-",
-  "span": "block left turns on the busy parts of the by-pass so people don't block everyone else trying to turn"
+  "span": "We need to block left turns on the busy parts of the by-pass so people don't block everyone else trying to turn"
  },
  {
   "participant_id": "323",
   "comment": "The WKU Nursing Program should be expanded so we have more nurses",
-  "cause": "expanding the WKU Nursing Program",
-  "effect": "we have more nurses",
+  "cause": "Nursing Program Capacity",
+  "effect": "Nurse Availability",
   "polarity": "+",
   "span": "The WKU Nursing Program should be expanded so we have more nurses"
  },
  {
-  "participant_id": "290",
-  "comment": "Develop the Greenway so that the paved trail is continuous and reaches major parts of the city including the square, WKU, GM, and others.",
-  "cause": "developing the Greenway",
-  "effect": "the paved trail is continuous and reaches major parts of the city",
-  "polarity": "+",
-  "span": "Develop the Greenway so that the paved trail is continuous and reaches major parts of the city"
- },
- {
   "participant_id": "314",
   "comment": "Bowling Green's refugee, immigrant, and international student population improves the university and the community.",
-  "cause": "Bowling Green's refugee, immigrant, and international student population",
-  "effect": "the university and the community",
+  "cause": "International and Refugee Population",
+  "effect": "Community Quality",
   "polarity": "+",
   "span": "Bowling Green's refugee, immigrant, and international student population improves the university and the community"
  },
  {
   "participant_id": "308",
   "comment": "Developing more bike trails into surrounding areas of the city would allow for a more developed both transport and recreational experiences",
-  "cause": "developing more bike trails into surrounding areas of the city",
-  "effect": "a more developed both transport and recreational experiences",
+  "cause": "Bike Trail Infrastructure",
+  "effect": "Recreational and Transport Quality",
   "polarity": "+",
   "span": "Developing more bike trails into surrounding areas of the city would allow for a more developed both transport and recreational experiences"
  },
  {
-  "participant_id": "305",
-  "comment": "A clean, efficient public transportation system would be a huge help to those with limited ability or desire to drive.",
-  "cause": "a clean, efficient public transportation system",
-  "effect": "those with limited ability or desire to drive",
-  "polarity": "+",
-  "span": "A clean, efficient public transportation system would be a huge help to those with limited ability or desire to drive"
- },
- {
-  "participant_id": "0",
-  "comment": "Relax restrictions on fencing in Home Owners Associations to promote people keeping animals on leashes or in fenced yards.",
-  "cause": "relaxing restrictions on fencing in Home Owners Associations",
-  "effect": "people keeping animals on leashes or in fenced yards",
-  "polarity": "+",
-  "span": "Relax restrictions on fencing in Home Owners Associations to promote people keeping animals on leashes or in fenced yards"
- },
- {
   "participant_id": "289",
   "comment": "Bowling Green needs to attract business like Costco and Trader Joe's to keep residents from driving to Nashville on weekends",
-  "cause": "attract business like Costco and Trader Joe's",
-  "effect": "residents driving to Nashville on weekends",
+  "cause": "Local Business Attraction",
+  "effect": "Out-of-Town Driving",
   "polarity": "-",
-  "span": "keep residents from driving to Nashville on weekends"
+  "span": "attract business like Costco and Trader Joe's to keep residents from driving to Nashville on weekends"
  },
  {
   "participant_id": "284",
   "comment": "A favorite place to visit (elsewhere) is a park filled with gently used toys (donated).  It inspires imagination, creativity and sharing.",
-  "cause": "a park filled with gently used toys (donated)",
-  "effect": "imagination, creativity and sharing",
+  "cause": "Toy Park Availability",
+  "effect": "Imagination and Creativity",
   "polarity": "+",
   "span": "It inspires imagination, creativity and sharing"
  },
  {
   "participant_id": "272",
   "comment": "Increase green spaces, especially near mall, to decrease congestion and improve \"green\" status",
-  "cause": "Increase green spaces, especially near mall",
-  "effect": "congestion",
+  "cause": "Green Spaces",
+  "effect": "Traffic Congestion",
   "polarity": "-",
-  "span": "decrease congestion"
- },
- {
-  "participant_id": "272",
-  "comment": "Increase green spaces, especially near mall, to decrease congestion and improve \"green\" status",
-  "cause": "Increase green spaces, especially near mall",
-  "effect": "green status",
-  "polarity": "+",
-  "span": "improve \"green\" status"
- },
- {
-  "participant_id": "278",
-  "comment": "Institute a business development grant that encourages WKU grads to stay in Bowling Green by starting local businesses.",
-  "cause": "business development grant",
-  "effect": "WKU grads to stay in Bowling Green",
-  "polarity": "+",
-  "span": "encourages WKU grads to stay in Bowling Green"
+  "span": "Increase green spaces, especially near mall, to decrease congestion"
  },
  {
   "participant_id": "274",
   "comment": "Refugee neighbors enrich our city's landscape and we should find more ways to welcome and integrate them into the life of the city.",
-  "cause": "Refugee neighbors",
-  "effect": "our city's landscape",
+  "cause": "Refugee Presence",
+  "effect": "City Landscape Quality",
   "polarity": "+",
   "span": "Refugee neighbors enrich our city's landscape"
  },
  {
   "participant_id": "272",
   "comment": "Install new sidewalks along major roads, like Three Springs, and city-wide bike routes, to decrease likelihood of accidents",
-  "cause": "Install new sidewalks along major roads, like Three Springs, and city-wide bike routes",
-  "effect": "likelihood of accidents",
+  "cause": "Sidewalk and Bike Route Infrastructure",
+  "effect": "Traffic Accidents",
   "polarity": "-",
-  "span": "decrease likelihood of accidents"
+  "span": "Install new sidewalks along major roads, like Three Springs, and city-wide bike routes, to decrease likelihood of accidents"
  },
  {
   "participant_id": "274",
   "comment": "The arts enrich our city.",
-  "cause": "The arts",
-  "effect": "our city",
+  "cause": "Arts Presence",
+  "effect": "City Quality",
   "polarity": "+",
-  "span": "The arts enrich our city"
- },
- {
-  "participant_id": "276",
-  "comment": "Enact rent control laws to stabilize the constant increase in rates.",
-  "cause": "Enact rent control laws",
-  "effect": "constant increase in rates",
-  "polarity": "-",
-  "span": "stabilize the constant increase in rates"
+  "span": "The arts enrich our city."
  },
  {
   "participant_id": "0",
   "comment": "The road closure between Shawnee and Patton Way makes access to Nashville Rd take 3 times as long and is a major annoyance.",
-  "cause": "The road closure between Shawnee and Patton Way",
-  "effect": "access to Nashville Rd take 3 times as long",
+  "cause": "Road Closures",
+  "effect": "Travel Time",
   "polarity": "+",
-  "span": "makes access to Nashville Rd take 3 times as long"
+  "span": "The road closure between Shawnee and Patton Way makes access to Nashville Rd take 3 times as long"
  },
  {
   "participant_id": "240",
   "comment": "SKYPAC needs to bring in younger, more entertaining acts. It will fall apart if they keep only catering to 50+. Could be a great venue.",
-  "cause": "they keep only catering to 50+",
-  "effect": "It will fall apart",
-  "polarity": "+",
-  "span": "will fall apart if"
+  "cause": "Catering to Older Audiences",
+  "effect": "SKYPAC Viability",
+  "polarity": "-",
+  "span": "It will fall apart if they keep only catering to 50+"
  },
  {
   "participant_id": "240",
   "comment": "We need more businesses like White Squirrel and Nats in BG. They add character to our town. Done with the Olive Garden and Belks.",
-  "cause": "They",
-  "effect": "character to our town",
+  "cause": "Local Business Presence",
+  "effect": "Town Character",
   "polarity": "+",
-  "span": "add"
+  "span": "They add character to our town"
  },
  {
   "participant_id": "240",
   "comment": "The access roads off Scottsville Rd are terrible. They provide constant traffic jams and can be dangerous. We need to budget to fix them.",
-  "cause": "They",
-  "effect": "constant traffic jams",
-  "polarity": "+",
-  "span": "provide"
+  "cause": "Access Road Quality",
+  "effect": "Traffic Congestion",
+  "polarity": "-",
+  "span": "They provide constant traffic jams"
  },
  {
   "participant_id": "240",
   "comment": "Our sidewalks need more connectivity. It's too piecemealed and makes some areas unusable.",
-  "cause": "It",
-  "effect": "some areas unusable",
+  "cause": "Sidewalk Connectivity",
+  "effect": "Area Usability",
   "polarity": "+",
-  "span": "makes"
+  "span": "makes some areas unusable"
  },
  {
   "participant_id": "199",
   "comment": "Recreational Cannabis in KY offers tourism, increased revenue, job opportunities, and shows massive leadership in the southern region.",
-  "cause": "Recreational Cannabis in KY",
-  "effect": "tourism, increased revenue, job opportunities",
+  "cause": "Recreational Cannabis Availability",
+  "effect": "Tourism",
   "polarity": "+",
-  "span": "offers"
+  "span": "Recreational Cannabis in KY offers tourism"
  },
  {
-  "participant_id": "87",
-  "comment": "More advertising should be done along I-65 to promote tourism into Bowling Green.",
-  "cause": "More advertising along I-65",
-  "effect": "tourism into Bowling Green",
+  "participant_id": "140",
+  "comment": "We need jobs to attract our own college educated students so they don\u2019t leave to get better paying jobs",
+  "cause": "Job Availability",
+  "effect": "College Educated Student Retention",
   "polarity": "+",
-  "span": "More advertising should be done along I-65 to promote tourism into Bowling Green"
+  "span": "jobs to attract our own college educated students"
+ },
+ {
+  "participant_id": "0",
+  "comment": "A fairness ordinance in Bowling Green would attract new businesses. No one wants to set up show in a town ethically stuck in the 1800s.",
+  "cause": "Fairness Ordinance Adoption",
+  "effect": "New Business Attraction",
+  "polarity": "+",
+  "span": "A fairness ordinance in Bowling Green would attract new businesses"
  },
  {
   "participant_id": "87",
   "comment": "Greenwood Mall should be remodeled to attract more buyers.",
-  "cause": "remodeling Greenwood Mall",
-  "effect": "attracting more buyers",
+  "cause": "Mall Remodeling",
+  "effect": "Buyer Traffic",
   "polarity": "+",
   "span": "Greenwood Mall should be remodeled to attract more buyers"
  },
  {
-  "participant_id": "82",
-  "comment": "The city should actually time stoplights correctly during rush hour to prevent complete gridlock",
-  "cause": "timing stoplights correctly during rush hour",
-  "effect": "complete gridlock",
-  "polarity": "-",
-  "span": "time stoplights correctly during rush hour to prevent complete gridlock"
- },
- {
-  "participant_id": "47",
-  "comment": "Something needs to be done with the river area- river walk, park, restaurants, summer events- to give the communities ways to get together.",
-  "cause": "doing something with the river area (river walk, park, restaurants, summer events)",
-  "effect": "giving the communities ways to get together",
-  "polarity": "+",
-  "span": "Something needs to be done with the river area- river walk, park, restaurants, summer events- to give the communities ways to get together"
- },
- {
-  "participant_id": "36",
-  "comment": "City needs to bar big COs employing from half a dozen temp services to keep 100s ineligble for FMLA due to less than 50 ppl/per 'employer'",
-  "cause": "employing from half a dozen temp services",
-  "effect": "keeping 100s ineligible for FMLA",
-  "polarity": "+",
-  "span": "employing from half a dozen temp services to keep 100s ineligble for FMLA"
- },
- {
-  "participant_id": "36",
-  "comment": "A person should not miss rent (say due to a car breakdown) and face eviction in less than 2 weeks (before next payday). Make it 30 days.",
-  "cause": "a car breakdown",
-  "effect": "missing rent",
-  "polarity": "+",
-  "span": "miss rent (say due to a car breakdown)"
- },
- {
-  "participant_id": "36",
-  "comment": "City should bar garbage token health plans designed to prevent temp services paying $166/month Obamacare emp. fee. Let ppl get subsidy.",
-  "cause": "garbage token health plans",
-  "effect": "temp services paying $166/month Obamacare emp. fee",
-  "polarity": "-",
-  "span": "garbage token health plans designed to prevent temp services paying $166/month Obamacare emp. fee"
- },
- {
   "participant_id": "36",
   "comment": "City should bar non-competes, similar to North Dakota/California, as driving destitution in non-tenure work force. Be heroic destination.",
-  "cause": "non-competes",
-  "effect": "destitution in non-tenure work force",
+  "cause": "Non-Compete Clauses",
+  "effect": "Worker Destitution",
   "polarity": "+",
   "span": "non-competes, similar to North Dakota/California, as driving destitution in non-tenure work force"
  },
  {
-  "participant_id": "13",
-  "comment": "I would like to see a sift in city planning and zoning to make BG a more walkable city with better sidewalk planning",
-  "cause": "a shift in city planning and zoning",
-  "effect": "BG a more walkable city",
-  "polarity": "+",
-  "span": "a sift in city planning and zoning to make BG a more walkable city"
- },
- {
-  "participant_id": "6",
-  "comment": "If the state cannot provide good retirement benefits to KRS employees, the county/city should supplement the retirement with a 401k.",
-  "cause": "the state cannot provide good retirement benefits to KRS employees",
-  "effect": "the county/city should supplement the retirement with a 401k",
-  "polarity": "+",
-  "span": "If the state cannot provide good retirement benefits to KRS employees, the county/city should supplement the retirement with a 401k"
- },
- {
   "participant_id": "6",
   "comment": "More youth programs are needed to bring the community together: volunteer organizations, community service, innovative creations labs",
-  "cause": "More youth programs",
-  "effect": "bring the community together",
+  "cause": "Youth Programs",
+  "effect": "Community Togetherness",
   "polarity": "+",
   "span": "More youth programs are needed to bring the community together"
  },
  {
   "participant_id": "0",
-  "comment": "Our local immigrant population has, overall, been a benefit to our city and county.",
-  "cause": "Our local immigrant population",
-  "effect": "our city and county",
-  "polarity": "+",
-  "span": "Our local immigrant population has, overall, been a benefit to our city and county"
- },
- {
-  "participant_id": "0",
   "comment": "Beautification projects and other quality-of-life enhancements like parks and libraries help attract new residents and industries to our city/county.",
-  "cause": "Beautification projects and other quality-of-life enhancements like parks and libraries",
-  "effect": "attract new residents and industries to our city/county",
+  "cause": "Beautification Projects and Quality-of-Life Enhancements",
+  "effect": "Attraction of New Residents and Industries",
   "polarity": "+",
   "span": "Beautification projects and other quality-of-life enhancements like parks and libraries help attract new residents and industries to our city/county"
  },
  {
   "participant_id": "0",
   "comment": "If private schools were to get a share of Federal or State education dollars, it would hurt public schools.",
-  "cause": "private schools getting a share of Federal or State education dollars",
-  "effect": "public schools",
+  "cause": "Private School Public Funding",
+  "effect": "Public School Quality",
   "polarity": "-",
   "span": "If private schools were to get a share of Federal or State education dollars, it would hurt public schools"
  },
  {
   "participant_id": "0",
-  "comment": "WKU and local community colleges should continue to offer courses that interest those seeking an education, whether or not the courses aid in job placement.",
-  "cause": "courses",
-  "effect": "job placement",
-  "polarity": "+",
-  "span": "courses aid in job placement"
- },
- {
-  "participant_id": "0",
-  "comment": "In order to better combat the opioid epidemic, it is time to view drug addiction as a health problem rather than a criminal justice problem.",
-  "cause": "viewing drug addiction as a health problem rather than a criminal justice problem",
-  "effect": "opioid epidemic",
-  "polarity": "-",
-  "span": "In order to better combat the opioid epidemic, it is time to view drug addiction as a health problem rather than a criminal justice problem"
- },
- {
-  "participant_id": "0",
   "comment": "Harsher sentences for drug users would help combat the opioid epidemic.",
-  "cause": "Harsher sentences for drug users",
-  "effect": "opioid epidemic",
+  "cause": "Drug Sentence Severity",
+  "effect": "Opioid Epidemic Severity",
   "polarity": "-",
   "span": "Harsher sentences for drug users would help combat the opioid epidemic"
  },
  {
   "participant_id": "0",
   "comment": "Opinion pieces without a specific author make it more confusing to determine whether a media source is biased or not.",
-  "cause": "Opinion pieces without a specific author",
-  "effect": "determining whether a media source is biased or not",
-  "polarity": "-",
+  "cause": "Author Anonymity in Opinion Pieces",
+  "effect": "Confusion Determining Media Bias",
+  "polarity": "+",
   "span": "Opinion pieces without a specific author make it more confusing to determine whether a media source is biased or not"
  },
  {
   "participant_id": "0",
-  "comment": "Local law enforcement would benefit from additional training in community relations.",
-  "cause": "additional training in community relations",
-  "effect": "Local law enforcement",
-  "polarity": "+",
-  "span": "Local law enforcement would benefit from additional training in community relations"
- },
- {
-  "participant_id": "0",
   "comment": "University management bears more responsibility than federal and state education funding cuts for tuition rising so much over the years.",
-  "cause": "University management and federal and state education funding cuts",
-  "effect": "tuition rising so much over the years",
+  "cause": "University Management Decisions",
+  "effect": "Tuition Costs",
   "polarity": "+",
   "span": "University management bears more responsibility than federal and state education funding cuts for tuition rising so much over the years"
- },
- {
-  "participant_id": "0",
-  "comment": "Local schools should help make up the pension fund crisis by learning to live with budget cuts.",
-  "cause": "learning to live with budget cuts",
-  "effect": "pension fund crisis",
-  "polarity": "-",
-  "span": "make up the pension fund crisis by learning to live with budget cuts"
  }
 ]

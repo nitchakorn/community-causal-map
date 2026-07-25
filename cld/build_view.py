@@ -60,6 +60,8 @@ TEMPLATE = r"""<!doctype html>
   .loopchip b { color: var(--ink-1); }
   .loopchip.active { border-color: var(--ink-2); }
   .loops-empty { color: var(--ink-3); font-size: 12.5px; margin-top: 14px; }
+  .focusnote { color: var(--ink-3); font-size: 12px; margin: 0 0 8px; }
+  .focusnote:empty { display: none; }
   details { margin-top: 16px; }
   summary { cursor: pointer; font-size: 13px; color: var(--ink-2); }
   table { border-collapse: collapse; margin-top: 10px; font-size: 12.5px; width: 100%;
@@ -96,6 +98,7 @@ TEMPLATE = r"""<!doctype html>
     <span class="key">line width = independent participants asserting it</span>
     <span class="key">circle size = times mentioned in claims</span>
   </div>
+  <p id="focusnote" class="focusnote"></p>
   <main>
     <div id="vizwrap"><svg id="viz" role="img" aria-label="Causal map of Bowling Green community claims"></svg><div id="tooltip"></div></div>
     <aside id="panel"><h2>Quotes behind a link</h2>
@@ -118,11 +121,22 @@ const COL = { '+': css.getPropertyValue('--pos').trim(), '-': css.getPropertyVal
 const W = wrap.clientWidth || 900, H = 640;
 svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-const nodes = GRAPH.nodes.map(n => ({...n,
+const _deg = {};
+GRAPH.edges.forEach(e => { _deg[e.source]=(_deg[e.source]||0)+1; _deg[e.target]=(_deg[e.target]||0)+1; });
+const _big = GRAPH.nodes.length > 45;              // only prune when the map is big enough to clutter
+const _keep = id => !_big || (_deg[id]||0) >= 2;   // small maps show every variable
+const _vEdges = GRAPH.edges.filter(e => _keep(e.source) && _keep(e.target));
+const _shown = new Set(); _vEdges.forEach(e => { _shown.add(e.source); _shown.add(e.target); });
+const nodes = GRAPH.nodes.filter(n => _shown.has(n.id)).map(n => ({...n,
   x: W/2 + (Math.random()-0.5)*W*0.8, y: H/2 + (Math.random()-0.5)*H*0.8,
   r: Math.min(22, 7 + Math.sqrt(n.n_claims)*2.4)}));
 const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
-const edges = GRAPH.edges.map(e => ({...e, s: byId[e.source], t: byId[e.target]}));
+const edges = _vEdges.map(e => ({...e, s: byId[e.source], t: byId[e.target]}));
+const _hidden = GRAPH.nodes.length - nodes.length;
+const _fn = document.getElementById('focusnote');
+if (_fn) _fn.textContent = _hidden > 0
+  ? `Showing the ${nodes.length} connected variables. ${_hidden} one-off mentions are hidden from the map for clarity — every link is still in the table below.`
+  : '';
 
 // live force simulation — animates on load, reheats on drag
 let dragNode = null, running = false;
@@ -269,7 +283,7 @@ function highlightLoop(L, chip) {
 
 // table view
 const tbody = document.querySelector('#edgetable tbody');
-[...edges].sort((a,b) => b.support - a.support).forEach(e => {
+[...GRAPH.edges].sort((a,b) => b.support - a.support).forEach(e => {
   const tr = document.createElement('tr');
   tr.innerHTML = `<td>${esc(e.source)}</td><td>${e.polarity}</td><td>${esc(e.target)}</td>` +
                  `<td class="num">${e.support}${e.conflict ? ' (conflict)' : ''}</td>`;

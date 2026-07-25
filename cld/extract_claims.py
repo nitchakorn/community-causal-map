@@ -17,7 +17,13 @@ PROMPT_HEAD = (
     "A causal claim exists only when the text itself asserts one thing influences another "
     "(because, causes, leads to, results in, brings, keeps, attracts, drives away, or unmistakable if-then). "
     "Do NOT infer mechanisms behind bare suggestions or wishes ('we need X' alone = no claim).\n"
-    "polarity '+' means cause increases/promotes effect; '-' means cause reduces/prevents effect.\n"
+    "Name 'cause' and 'effect' as NEUTRAL variables naming a quantity that can rise or fall "
+    "(e.g. 'Sidewalk Availability', 'Traffic Congestion', 'Driver Confusion'), NEVER a directional "
+    "phrase ('lack of sidewalks', 'less traffic'). Then set 'polarity' by how those two quantities "
+    "actually co-move in the sentence: '+' if they rise and fall together, '-' if one rises as the other falls.\n"
+    "Example: 'The lack of sidewalks discourages walking' -> cause 'Sidewalk Availability', effect "
+    "'Walking', polarity '+' (more sidewalks -> more walking). 'Bike lanes caused confusion for drivers' "
+    "-> cause 'Bike Lanes', effect 'Driver Confusion', polarity '+' (more lanes -> more confusion).\n"
     'Return ONLY JSON: {"claims":[{"comment_index":int,"cause":str,"effect":str,'
     '"polarity":"+ or -","span":"verbatim words asserting it"}]}\n'
     "Comments:\n"

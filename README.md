@@ -12,9 +12,9 @@ Built on the public 2018 Bowling Green / Warren County, KY conversation (607 com
 ## Findings
 
 - **607 comments → 8 coherent topics** (transportation, urban development, downtown economy, education, parks, safety, health/social services, governance) through the Sensemaker categorization pipeline.
-- **93 explicit causal claims from 84 comments (14% of the corpus)** under a strict extraction rule: the text itself must assert a mechanism ("annexation would eliminate unincorporated islands"), bare wishes extract nothing.
-- Canonicalized into **77 variables and 69 signed causal links**; 4 links independently asserted by 2+ residents.
-- **Zero closed feedback loops** — the headline negative result, reported as such. Individual civic comments carry single cause→effect links; feedback structure doesn't close across 84 claiming participants at this density. Loops require denser elicitation (adaptive follow-ups asking *"and what does that lead to?"*) — which is exactly what this argues for.
+- **74 explicit causal claims from 66 comments (~11% of the corpus)** under a strict extraction rule: the text itself must assert a mechanism ("annexation would eliminate unincorporated islands"), bare wishes extract nothing.
+- Canonicalized into **97 variables and 71 signed causal links**, 1 of them independently asserted by 2+ residents. The interactive map focuses on the ~26 variables that connect to others (a genuine "Local Government Revenue" hub emerges — cannabis legalization, business activity, and traffic enforcement all feed it); the one-off mentions are listed in the table. See [`cld/METHOD_NOTES.md`](cld/METHOD_NOTES.md) for why these numbers differ from an earlier version (a polarity-inversion bug in canonicalization was fixed; the earlier map's tighter look was partly an artifact of over-merging).
+- **Zero closed feedback loops** — the headline negative result, reported as such. Individual civic comments carry single cause→effect links; feedback structure doesn't close across the claiming participants at this density. Loops require denser elicitation (adaptive follow-ups asking *"and what does that lead to?"*) — which is exactly what this argues for.
 - Along the way: one reproducible model-behavior bug (4 of 438 scoring prompts consistently hang `gemini-3.1-flash-lite-preview` past a 10-minute client timeout; the flagship model clears all 438 in seconds).
 
 ## Method (CLD layer)
@@ -22,6 +22,8 @@ Built on the public 2018 Bowling Green / Warren County, KY conversation (607 com
 1. **Extract** (`cld/extract_claims.py`) — explicit-claims-only prompt over every comment, structured JSON out: `(cause, effect, polarity, verbatim span, participant_id)`.
 2. **Canonicalize + graph** (`cld/build_graph.py`) — LLM merge of surface phrases into a controlled vocabulary (surface forms preserved as provenance), signed digraph in networkx, cycle detection with loop type = polarity product (+ → Reinforcing, − → Balancing).
 3. **Render** (`cld/build_view.py`) — a self-contained interactive HTML: polarity-colored arrows (colorblind-validated palette), line width = independent corroboration, click-through to verbatim quotes, table view.
+
+> **Recreating this? Read [`cld/METHOD_NOTES.md`](cld/METHOD_NOTES.md) first.** It documents two non-obvious pitfalls that will bite you — a polarity-inversion bug introduced by the canonicalization step (arrows that point the opposite of what people said), and the correctness-vs-legibility trade-off — plus why you must test the pipeline end-to-end, not just syntax-check it.
 
 ## Reproduce
 
