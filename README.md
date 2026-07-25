@@ -4,9 +4,11 @@
 
 Built on the public 2018 Bowling Green / Warren County, KY conversation (607 comments, The American Assembly on [Polis](https://pol.is), via [compdemocracy/openData](https://github.com/compdemocracy/openData)).
 
+**New to causal loop diagrams?** [`cld/READING_THE_MAP.md`](cld/READING_THE_MAP.md) explains — in plain language, and in the terms a system-dynamics practitioner would want — what this map is, how it's built, and what you can and can't conclude from it.
+
 ## Live demos
 
-- **[Community Causal Map](https://nitchakorn.github.io/community-causal-map/cld.html)** — the CLD extension. Click any arrow to read the quotes asserting that link.
+- **[Community Causal Map](https://nitchakorn.github.io/community-causal-map/cld.html)** — the CLD extension. A ~10-theme overview, with a zoom-in to all 97 variables; click any arrow to read the quotes asserting that link.
 - **[Interactive Report](https://nitchakorn.github.io/community-causal-map/report/)** — the recreated Sensemaker report: topics, opinions, quotes ranked by constructiveness.
 
 ## Findings
@@ -14,7 +16,7 @@ Built on the public 2018 Bowling Green / Warren County, KY conversation (607 com
 - **607 comments → 8 coherent topics** (transportation, urban development, downtown economy, education, parks, safety, health/social services, governance) through the Sensemaker categorization pipeline.
 - **74 explicit causal claims from 66 comments (~11% of the corpus)** under a strict extraction rule: the text itself must assert a mechanism ("annexation would eliminate unincorporated islands"), bare wishes extract nothing.
 - Canonicalized into **97 variables and 71 signed causal links**, 1 of them independently asserted by 2+ residents. The interactive map focuses on the ~26 variables that connect to others (a genuine "Local Government Revenue" hub emerges — cannabis legalization, business activity, and traffic enforcement all feed it); the one-off mentions are listed in the table. See [`cld/METHOD_NOTES.md`](cld/METHOD_NOTES.md) for why these numbers differ from an earlier version (a polarity-inversion bug in canonicalization was fixed; the earlier map's tighter look was partly an artifact of over-merging).
-- **Zero closed feedback loops** — the headline negative result, reported as such. Individual civic comments carry single cause→effect links; feedback structure doesn't close across the claiming participants at this density. Loops require denser elicitation (adaptive follow-ups asking *"and what does that lead to?"*) — which is exactly what this argues for.
+- **No closed loops at the variable level; one _candidate_ loop at the theme level.** Individual comments carry single cause→effect links, not circuits — so the detailed map has zero feedback loops, a real statement about what one-shot public comment reveals. Aggregating to themes surfaces one *possible* reinforcing loop (Local Economy ⇄ Community & Governance), but it rests on only a couple of participants with one contested arm, so the map labels it a **hypothesis, not a finding**. Closing loops for real needs denser, iterative elicitation — exactly what this argues for.
 - Along the way: one reproducible model-behavior bug (4 of 438 scoring prompts consistently hang `gemini-3.1-flash-lite-preview` past a 10-minute client timeout; the flagship model clears all 438 in seconds).
 
 ## Method (CLD layer)

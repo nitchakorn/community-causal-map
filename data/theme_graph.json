@@ -1,0 +1,161 @@
+{
+ "nodes": [
+  {
+   "id": "Community & Governance",
+   "n_claims": 18
+  },
+  {
+   "id": "Crime, Drugs & Justice",
+   "n_claims": 18
+  },
+  {
+   "id": "Government Finance",
+   "n_claims": 11
+  },
+  {
+   "id": "Local Economy & Jobs",
+   "n_claims": 19
+  },
+  {
+   "id": "Public Space & Environment",
+   "n_claims": 20
+  },
+  {
+   "id": "Traffic & Mobility",
+   "n_claims": 21
+  }
+ ],
+ "edges": [
+  {
+   "source": "Community & Governance",
+   "target": "Local Economy & Jobs",
+   "polarity": "+",
+   "support": 2,
+   "conflict": true,
+   "quotes": [
+    {
+     "participant_id": "1259",
+     "span": "must reflect the racial/ethnic city/county population demographic to assist in recruitment/growth",
+     "comment": "City/county gov't. (in all of there forms) must reflect the racial/ethnic city/county population demographic to assist in recruitment/growth",
+     "raw_cause": "Representative Municipal Governance",
+     "raw_effect": "Regional Economic Growth"
+    },
+    {
+     "participant_id": "0",
+     "span": "Beautification projects and other quality-of-life enhancements like parks and libraries help attract new residents and industries to our city/county",
+     "comment": "Beautification projects and other quality-of-life enhancements like parks and libraries help attract new residents and industries to our city/county.",
+     "raw_cause": "Community Quality of Life",
+     "raw_effect": "Regional Economic Growth"
+    },
+    {
+     "participant_id": "0",
+     "span": "A fairness ordinance in Bowling Green would attract new businesses",
+     "comment": "A fairness ordinance in Bowling Green would attract new businesses. No one wants to set up show in a town ethically stuck in the 1800s.",
+     "raw_cause": "Civil Rights Ordinances",
+     "raw_effect": "Local Business Growth"
+    }
+   ]
+  },
+  {
+   "source": "Local Economy & Jobs",
+   "target": "Community & Governance",
+   "polarity": "+",
+   "support": 2,
+   "conflict": false,
+   "quotes": [
+    {
+     "participant_id": "240",
+     "span": "They add character to our town",
+     "comment": "We need more businesses like White Squirrel and Nats in BG. They add character to our town. Done with the Olive Garden and Belks.",
+     "raw_cause": "Local Business Activity",
+     "raw_effect": "Community Identity"
+    },
+    {
+     "participant_id": "36",
+     "span": "non-competes, similar to North Dakota/California, as driving destitution in non-tenure work force",
+     "comment": "City should bar non-competes, similar to North Dakota/California, as driving destitution in non-tenure work force. Be heroic destination.",
+     "raw_cause": "Employment Regulations",
+     "raw_effect": "Community Poverty Level"
+    }
+   ]
+  },
+  {
+   "source": "Crime, Drugs & Justice",
+   "target": "Government Finance",
+   "polarity": "+",
+   "support": 2,
+   "conflict": false,
+   "quotes": [
+    {
+     "participant_id": "1053",
+     "span": "Legalizing marijuana at the state level could produce substantial tax revenue",
+     "comment": "Legalizing marijuana at the state level could produce substantial tax revenue, but if only BG did, it would cause problems.",
+     "raw_cause": "Cannabis Legalization",
+     "raw_effect": "Local Government Revenue"
+    },
+    {
+     "participant_id": "1470",
+     "span": "Legalized Marijuana will not only assist Bowling Green in earning Tax revenue",
+     "comment": "Legalized Marijuana will not only assist Bowling Green in earning Tax revenue but will decrease the strain on our prison system. Win-Win.",
+     "raw_cause": "Cannabis Legalization",
+     "raw_effect": "Local Government Revenue"
+    }
+   ]
+  },
+  {
+   "source": "Public Space & Environment",
+   "target": "Community & Governance",
+   "polarity": "+",
+   "support": 2,
+   "conflict": false,
+   "quotes": [
+    {
+     "participant_id": "308",
+     "span": "Developing more bike trails into surrounding areas of the city would allow for a more developed both transport and recreational experiences",
+     "comment": "Developing more bike trails into surrounding areas of the city would allow for a more developed both transport and recreational experiences",
+     "raw_cause": "Pedestrian and Bike Infrastructure",
+     "raw_effect": "Community Quality of Life"
+    },
+    {
+     "participant_id": "274",
+     "span": "The arts enrich our city.",
+     "comment": "The arts enrich our city.",
+     "raw_cause": "Arts and Culture Presence",
+     "raw_effect": "Community Quality of Life"
+    }
+   ]
+  },
+  {
+   "source": "Local Economy & Jobs",
+   "target": "Traffic & Mobility",
+   "polarity": "-",
+   "support": 2,
+   "conflict": false,
+   "quotes": [
+    {
+     "participant_id": "365",
+     "span": "Shopping should be spread across all four corners of the county, so the traffic on Scottsville rd and Campbell lane will be improved",
+     "comment": "Shopping should be spread across all four corners of the county, so the traffic on Scottsville rd and Campbell lane will be improved.",
+     "raw_cause": "Retail Infrastructure",
+     "raw_effect": "Traffic Congestion"
+    },
+    {
+     "participant_id": "289",
+     "span": "attract business like Costco and Trader Joe's to keep residents from driving to Nashville on weekends",
+     "comment": "Bowling Green needs to attract business like Costco and Trader Joe's to keep residents from driving to Nashville on weekends",
+     "raw_cause": "Local Business Growth",
+     "raw_effect": "Travel Activity"
+    }
+   ]
+  }
+ ],
+ "loops": [
+  {
+   "nodes": [
+    "Local Economy & Jobs",
+    "Community & Governance"
+   ],
+   "type": "R"
+  }
+ ]
+}

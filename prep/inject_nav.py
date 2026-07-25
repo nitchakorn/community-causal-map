@@ -36,6 +36,32 @@ def inject_credit(path: str) -> None:
   print("credit ->", path)
 
 
+# The Causal Map has two views: a hand-grouped 10-theme overview (headline) and the full
+# 97-variable map (drill-down). These notes explain the altitude + cross-link the two, and
+# keep the theme view honest about what it is (curated grouping; loop = hypothesis).
+THEME_NOTE = (
+    '<p style="color:var(--ink-3);font-size:12.5px;margin-top:10px;max-width:72ch">'
+    'A theme-level overview: the 97 fine-grained variables grouped into 10 themes '
+    '(the grouping is hand-curated — see <code>cld/build_themes.py</code>), showing only '
+    'theme-to-theme links that <b>2+ residents independently</b> drew. Any reinforcing (R) '
+    'loop here is a <b>candidate hypothesis</b>, not a settled finding — click it and read the '
+    'quotes before trusting it. <a href="cld-detail.html" style="color:var(--pos)">'
+    'Zoom in to all 97 variables &#8600;</a></p>'
+)
+DETAIL_NOTE = (
+    '<p style="color:var(--ink-3);font-size:12.5px;margin-top:10px;max-width:72ch">'
+    'The full variable-level map (the connected core is shown; every link is in the table). '
+    '<a href="cld.html" style="color:var(--pos)">&#8598; Back to the theme overview</a></p>'
+)
+
+
+def insert_after_desc(path: str, snippet: str) -> None:
+  """Insert a note right after the map's lead description paragraph."""
+  s = open(path, encoding="utf-8").read()
+  s = s.replace("not drawn.</p>", "not drawn.</p>\n    " + snippet, 1)
+  open(path, "w", encoding="utf-8").write(s)
+
+
 def pills(base: str, current: str) -> str:
   links = []
   for label, href, key in ITEMS:
@@ -73,16 +99,21 @@ def inject(path: str, current: str, base: str) -> None:
 
 
 def main() -> None:
+  # Headline "Causal Map" = the theme overview; the full variable map is a drill-down page.
+  if os.path.exists("theme_view.html"):
+    open("docs/cld.html", "w", encoding="utf-8").write(open("theme_view.html", encoding="utf-8").read())
+    insert_after_desc("docs/cld.html", THEME_NOTE)
   if os.path.exists("cld_view.html"):
-    open("docs/cld.html", "w", encoding="utf-8").write(open("cld_view.html", encoding="utf-8").read())
+    open("docs/cld-detail.html", "w", encoding="utf-8").write(open("cld_view.html", encoding="utf-8").read())
+    insert_after_desc("docs/cld-detail.html", DETAIL_NOTE)
   if os.path.exists("tool.html"):
     t = open("tool.html", encoding="utf-8").read()
     open("docs/tool.html", "w", encoding="utf-8").write(t)
     open("hf_space/index.html", "w", encoding="utf-8").write(t)
-  else:
-    open("hf_space/index.html", "w", encoding="utf-8").write(open("cld_view.html", encoding="utf-8").read())
   inject("docs/index.html", "home", "")
   inject("docs/cld.html", "cld", "")
+  if os.path.exists("docs/cld-detail.html"):
+    inject("docs/cld-detail.html", "detail", "")  # 'detail' not in ITEMS -> Causal Map pill links back
   if os.path.exists("docs/report/index.html"):
     inject("docs/report/index.html", "report", "../")
     inject_credit("docs/report/index.html")

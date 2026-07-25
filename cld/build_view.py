@@ -33,7 +33,7 @@ TEMPLATE = r"""<!doctype html>
   }
   * { box-sizing: border-box; margin: 0; }
   body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-  .viz-root { background: var(--page); color: var(--ink-1); min-height: 100vh; padding: 20px; }
+  .viz-root { background: var(--page); color: var(--ink-1); min-height: 100vh; padding: 52px 20px 20px; }
   header h1 { font-size: 20px; font-weight: 650; }
   header p { color: var(--ink-2); font-size: 13px; margin-top: 4px; max-width: 72ch; }
   .legend { display: flex; flex-wrap: wrap; gap: 18px; align-items: center;
@@ -298,11 +298,14 @@ if (alpha > 0.02) requestAnimationFrame(animate); else redraw();
 
 
 def main() -> None:
-  graph = json.load(open("data/causal_graph.json", encoding="utf-8"))
+  import sys
+  src = sys.argv[1] if len(sys.argv) > 1 else "data/causal_graph.json"
+  out = sys.argv[2] if len(sys.argv) > 2 else "cld_view.html"
+  graph = json.load(open(src, encoding="utf-8"))
   html = TEMPLATE.replace('"__GRAPH__"', json.dumps(graph, ensure_ascii=False))
-  with open("cld_view.html", "w", encoding="utf-8") as f:
+  with open(out, "w", encoding="utf-8") as f:
     f.write(html)
-  print(f"wrote cld_view.html nodes={len(graph['nodes'])} "
+  print(f"wrote {out} nodes={len(graph['nodes'])} "
         f"edges={len(graph['edges'])} loops={len(graph['loops'])}")
 
 
