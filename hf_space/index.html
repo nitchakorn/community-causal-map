@@ -80,11 +80,8 @@
 <body><div id="sitenav" style="position:fixed;top:10px;right:10px;z-index:9999;display:flex;gap:6px;font:12.5px system-ui"><a href="https://nitchakorn.github.io/community-causal-map/index.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;" target="_blank" rel="noopener">Home</a><a href="https://nitchakorn.github.io/community-causal-map/report/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;" target="_blank" rel="noopener">Report — sample</a><a href="https://nitchakorn.github.io/community-causal-map/report-full/" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;" target="_blank" rel="noopener">Report — full corpus</a><a href="https://nitchakorn.github.io/community-causal-map/cld.html" style="background:#fcfcfb;border:1px solid rgba(11,11,11,0.15);border-radius:999px;padding:5px 12px;text-decoration:none;box-shadow:0 1px 6px rgba(0,0,0,0.07);color:#2a78d6;" target="_blank" rel="noopener">Causal Map</a></div>
 <div class="viz-root">
   <header>
-    <h1>How Bowling Green Thinks It Works — Community Causal Map</h1>
-    <p>Explicit causal claims extracted from residents' own words in the 2018 Bowling Green / Warren
-       County civic conversation (607 comments, The American Assembly / Polis). Every link is backed by
-       verbatim quotes — click any arrow to read them. Suggestions without an asserted mechanism are
-       not drawn.</p>
+    <h1>Community Causal Map — from your own words</h1>
+    <p>Upload a CSV of open-ended responses and run it with your own Gemini API key — the map is built entirely in your browser, calling Google directly; nothing is uploaded to any server. It shows a demo of the 2018 Bowling Green / Warren County civic conversation (607 comments, The American Assembly / Polis) until you load your own data. Every link is backed by verbatim quotes — click any arrow to read them; suggestions without an asserted mechanism are not drawn.</p>
     <p style="font-size:12.5px;color:var(--ink-3);line-height:1.55;margin-top:10px">Built on <a href="https://github.com/Jigsaw-Code/sensemaking-tools" style="color:var(--pos)">Google Jigsaw&rsquo;s sensemaking-tools</a>, used under Apache 2.0. Independent extension by Nitchakorn Tangs, not affiliated with or endorsed by Google or Jigsaw.</p>
   </header>
   <div class="legend" role="list">
@@ -308,7 +305,13 @@ const EXTRACT_HEAD = "You are auditing community comments for EXPLICIT causal cl
   "A causal claim exists only when the text itself asserts one thing influences another " +
   "(because, causes, leads to, results in, brings, keeps, attracts, drives away, or unmistakable if-then). " +
   "Do NOT infer mechanisms behind bare suggestions or wishes ('we need X' alone = no claim).\n" +
-  "polarity '+' means cause increases/promotes effect; '-' means cause reduces/prevents effect.\n" +
+  "Name 'cause' and 'effect' as NEUTRAL variables naming a quantity that can rise or fall " +
+  "(e.g. 'Sidewalk Availability', 'Traffic Congestion', 'Driver Confusion'), NEVER a directional " +
+  "phrase ('lack of sidewalks', 'less traffic'). Then set 'polarity' by how those two quantities " +
+  "actually co-move in the sentence: '+' if they rise and fall together, '-' if one rises as the other falls.\n" +
+  "Example: 'The lack of sidewalks discourages walking' -> cause 'Sidewalk Availability', effect " +
+  "'Walking', polarity '+' (more sidewalks -> more walking). 'Bike lanes caused confusion for drivers' " +
+  "-> cause 'Bike Lanes', effect 'Driver Confusion', polarity '+' (more lanes -> more confusion).\n" +
   'Return ONLY JSON: {"claims":[{"comment_index":int,"cause":str,"effect":str,' +
   '"polarity":"+ or -","span":"verbatim words asserting it"}]}\nComments:\n';
 
@@ -453,7 +456,9 @@ $('runbtn').addEventListener('click', async () => {
     const phrases = [...new Set(claims.flatMap(c => [c.cause, c.effect]))].slice(0, 400);
     const canon = await llm(
       'These phrases are variables from causal claims in a public conversation. Merge phrases that mean the same underlying variable.\n' +
-      "Rules: canonical names are short Title-Case noun phrases (2-4 words), neutral direction, specific enough to distinguish different variables. " +
+      "Rules: canonical names are short Title-Case noun phrases (2-4 words), specific enough to distinguish different variables. " +
+      "PRESERVE each phrase's semantic direction — merge only true synonyms; NEVER map a phrase to a name that means its opposite " +
+      "(do not turn 'Driver Confusion' into 'Intersection Navigation', or 'Sidewalk Availability' into 'Missing Sidewalks'). " +
       'Every input phrase must appear exactly once as a key.\nReturn ONLY JSON: {"mapping": {"<input phrase>": "<Canonical Name>"}}\nPhrases:\n' +
       phrases.map(p => '- ' + p).join('\n'), key);
     const map = canon.mapping || {};

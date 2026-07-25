@@ -7,6 +7,7 @@ adds an upload/key control panel and a fully client-side extraction pipeline
 Run from repo root: python prep/build_tool.py
 """
 import json
+import re
 import sys
 
 sys.path.insert(0, ".")
@@ -41,7 +42,13 @@ const EXTRACT_HEAD = "You are auditing community comments for EXPLICIT causal cl
   "A causal claim exists only when the text itself asserts one thing influences another " +
   "(because, causes, leads to, results in, brings, keeps, attracts, drives away, or unmistakable if-then). " +
   "Do NOT infer mechanisms behind bare suggestions or wishes ('we need X' alone = no claim).\n" +
-  "polarity '+' means cause increases/promotes effect; '-' means cause reduces/prevents effect.\n" +
+  "Name 'cause' and 'effect' as NEUTRAL variables naming a quantity that can rise or fall " +
+  "(e.g. 'Sidewalk Availability', 'Traffic Congestion', 'Driver Confusion'), NEVER a directional " +
+  "phrase ('lack of sidewalks', 'less traffic'). Then set 'polarity' by how those two quantities " +
+  "actually co-move in the sentence: '+' if they rise and fall together, '-' if one rises as the other falls.\n" +
+  "Example: 'The lack of sidewalks discourages walking' -> cause 'Sidewalk Availability', effect " +
+  "'Walking', polarity '+' (more sidewalks -> more walking). 'Bike lanes caused confusion for drivers' " +
+  "-> cause 'Bike Lanes', effect 'Driver Confusion', polarity '+' (more lanes -> more confusion).\n" +
   'Return ONLY JSON: {"claims":[{"comment_index":int,"cause":str,"effect":str,' +
   '"polarity":"+ or -","span":"verbatim words asserting it"}]}\nComments:\n';
 
@@ -186,7 +193,9 @@ $('runbtn').addEventListener('click', async () => {
     const phrases = [...new Set(claims.flatMap(c => [c.cause, c.effect]))].slice(0, 400);
     const canon = await llm(
       'These phrases are variables from causal claims in a public conversation. Merge phrases that mean the same underlying variable.\n' +
-      "Rules: canonical names are short Title-Case noun phrases (2-4 words), neutral direction, specific enough to distinguish different variables. " +
+      "Rules: canonical names are short Title-Case noun phrases (2-4 words), specific enough to distinguish different variables. " +
+      "PRESERVE each phrase's semantic direction — merge only true synonyms; NEVER map a phrase to a name that means its opposite " +
+      "(do not turn 'Driver Confusion' into 'Intersection Navigation', or 'Sidewalk Availability' into 'Missing Sidewalks'). " +
       'Every input phrase must appear exactly once as a key.\nReturn ONLY JSON: {"mapping": {"<input phrase>": "<Canonical Name>"}}\nPhrases:\n' +
       phrases.map(p => '- ' + p).join('\n'), key);
     const map = canon.mapping || {};
@@ -215,6 +224,22 @@ def main() -> None:
   t = t.replace(
       "<title>How Bowling Green Thinks It Works — Community Causal Map</title>",
       "<title>Community Causal Map — run it on your data</title>")
+
+  # The template header is Bowling-Green-specific; on the BYO tool the map is only a
+  # demo until the visitor loads their own CSV, so make the header honest in both states.
+  t = t.replace(
+      "<h1>How Bowling Green Thinks It Works — Community Causal Map</h1>",
+      "<h1>Community Causal Map — from your own words</h1>")
+  t = re.sub(
+      r"<p>Explicit causal claims extracted.*?not drawn\.</p>",
+      "<p>Upload a CSV of open-ended responses and run it with your own Gemini API key — the map "
+      "is built entirely in your browser, calling Google directly; nothing is uploaded to any "
+      "server. It shows a demo of the 2018 Bowling Green / Warren County civic conversation "
+      "(607 comments, The American Assembly / Polis) until you load your own data. Every link is "
+      "backed by verbatim quotes — click any arrow to read them; suggestions without an asserted "
+      "mechanism are not drawn.</p>",
+      t, count=1, flags=re.S)
+
   t = t.replace("<main>", PANEL + "\n  <main>", 1)
 
   # demo graph + reassignable GRAPH
